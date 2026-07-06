@@ -131,4 +131,4 @@ Este projeto está sob a licença MIT.
 iOS Developer
 
 - GitHub: https://github.com/GbrDev0ps
-- LinkedIn: *(adicione aqui)*
+- LinkedIn: *www.linkedin.com/in/gabriel-martins-214121235*
