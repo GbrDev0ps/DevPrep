@@ -117,7 +117,7 @@ private extension SimulationQuestionView {
     var progressSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("Pergunta (questionNumber) de (questionCount)")
+                Text("Pergunta \(questionNumber) de \(questionCount)")
                     .font(.subheadline)
                     .fontWeight(.semibold)
 
@@ -178,7 +178,7 @@ private struct SimulationCompletionView: View {
                 .font(.title2)
                 .fontWeight(.bold)
 
-            Text("Você revisou (questionCount) perguntas. Continue praticando para chegar cada vez mais preparado.")
+            Text("Você revisou \(questionCount) perguntas. Continue praticando para chegar cada vez mais preparado.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
 
