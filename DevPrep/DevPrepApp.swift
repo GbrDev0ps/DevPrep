@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct DevPrepApp: App {
+
+    @State
+    private var favoritesStore = FavoritesStore()
+
     var body: some Scene {
         WindowGroup {
             SplashView()
+                .environment(favoritesStore)
         }
     }
 }

@@ -97,7 +97,7 @@ private extension HomeView {
 
             NavigationLink {
 
-                Text("Favoritos")
+                FavoritesView()
 
             } label: {
 
@@ -109,7 +109,7 @@ private extension HomeView {
 
             NavigationLink {
 
-                Text("Simulados")
+                SimulationView()
 
             } label: {
 
@@ -125,4 +125,3 @@ private extension HomeView {
 #Preview {
     HomeView()
 }
-

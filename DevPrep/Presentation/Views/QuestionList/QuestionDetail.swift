@@ -25,5 +25,10 @@ struct QuestionDetailView: View {
             .padding()
         }
         .navigationTitle("Pergunta")
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                FavoriteToggleButton(question: question)
+            }
+        }
     }
 }

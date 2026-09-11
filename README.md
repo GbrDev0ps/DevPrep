@@ -77,8 +77,8 @@ Models
 - [x] Categorias
 - [x] Busca
 - [x] Perguntas Técnicas
-- [ ] Simulados completos
-- [ ] Favoritos
+- [x] Simulados completos
+- [x] Favoritos
 - [ ] Histórico de desempenho
 - [ ] Modo Offline
 - [ ] Inglês
