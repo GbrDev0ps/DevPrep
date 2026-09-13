@@ -16,10 +16,14 @@ final class SimulationViewModel {
 
     private(set) var simulation: Simulation?
     private(set) var currentIndex = 0
-    private(set) var isAnswerRevealed = false
+    private(set) var selectedAnswer: String?
+    private(set) var isAnswerSubmitted = false
     private(set) var isLoading = false
     private(set) var hasLoadError = false
     private(set) var isFinished = false
+    private(set) var score = 0
+
+    private var answerChoicesByQuestionID: [String: [String]] = [:]
 
     init(repository: QuestionRepository) {
         self.repository = repository
@@ -47,12 +51,29 @@ final class SimulationViewModel {
         return Double(questionNumber) / Double(questionCount)
     }
 
+    var currentChoices: [String] {
+        guard let questionID = currentQuestion?.id else { return [] }
+        return answerChoicesByQuestionID[questionID] ?? []
+    }
+
+    var didAnswerCorrectly: Bool {
+        guard let selectedAnswer,
+              let currentQuestion else {
+            return false
+        }
+
+        return selectedAnswer == currentQuestion.answer
+    }
+
     func start() async {
         isLoading = true
         hasLoadError = false
         isFinished = false
         currentIndex = 0
-        isAnswerRevealed = false
+        selectedAnswer = nil
+        isAnswerSubmitted = false
+        score = 0
+        answerChoicesByQuestionID = [:]
 
         defer {
             isLoading = false
@@ -68,6 +89,14 @@ final class SimulationViewModel {
                 questions: selectedQuestions,
                 startedAt: Date()
             )
+            answerChoicesByQuestionID = Dictionary(
+                uniqueKeysWithValues: selectedQuestions.map { question in
+                    (
+                        question.id,
+                        makeChoices(for: question, from: allQuestions)
+                    )
+                }
+            )
         } catch {
             simulation = nil
             hasLoadError = true
@@ -75,14 +104,25 @@ final class SimulationViewModel {
         }
     }
 
-    func revealAnswer() {
-        guard currentQuestion != nil else { return }
-        isAnswerRevealed = true
+    func selectAnswer(_ answer: String) {
+        guard !isAnswerSubmitted,
+              currentChoices.contains(answer),
+              let currentQuestion else {
+            return
+        }
+
+        selectedAnswer = answer
+        isAnswerSubmitted = true
+
+        if answer == currentQuestion.answer {
+            score += 1
+        }
     }
 
     func nextQuestion() {
         guard let questionCount = simulation?.questions.count,
-              questionCount > 0 else {
+              questionCount > 0,
+              isAnswerSubmitted else {
             return
         }
 
@@ -90,7 +130,45 @@ final class SimulationViewModel {
             isFinished = true
         } else {
             currentIndex += 1
-            isAnswerRevealed = false
+            selectedAnswer = nil
+            isAnswerSubmitted = false
         }
+    }
+}
+
+private extension SimulationViewModel {
+
+    func makeChoices(for question: Question, from allQuestions: [Question]) -> [String] {
+        let sameLevelAndCategory = allQuestions.filter {
+            $0.id != question.id &&
+            $0.category == question.category &&
+            $0.difficulty == question.difficulty
+        }
+
+        let sameCategory = allQuestions.filter {
+            $0.id != question.id &&
+            $0.category == question.category
+        }
+
+        let remainingQuestions = allQuestions.filter {
+            $0.id != question.id
+        }
+
+        var choices = [question.answer]
+        let candidates = (
+            sameLevelAndCategory +
+            sameCategory +
+            remainingQuestions
+        ).shuffled()
+
+        for candidate in candidates where !choices.contains(candidate.answer) {
+            choices.append(candidate.answer)
+
+            if choices.count == 4 {
+                break
+            }
+        }
+
+        return choices.shuffled()
     }
 }

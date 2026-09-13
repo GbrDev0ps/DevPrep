@@ -49,6 +49,7 @@ private extension SimulationView {
         } else if viewModel.isFinished {
             SimulationCompletionView(
                 questionCount: viewModel.simulation?.questions.count ?? 0,
+                score: viewModel.score,
                 onRestart: {
                     Task {
                         await viewModel.start()
@@ -62,8 +63,11 @@ private extension SimulationView {
                 questionNumber: viewModel.questionNumber,
                 questionCount: questionCount,
                 progress: viewModel.progress,
-                isAnswerRevealed: viewModel.isAnswerRevealed,
-                onRevealAnswer: viewModel.revealAnswer,
+                choices: viewModel.currentChoices,
+                selectedAnswer: viewModel.selectedAnswer,
+                isAnswerSubmitted: viewModel.isAnswerSubmitted,
+                didAnswerCorrectly: viewModel.didAnswerCorrectly,
+                onSelectAnswer: viewModel.selectAnswer,
                 onNextQuestion: viewModel.nextQuestion
             )
         }
@@ -76,8 +80,11 @@ private struct SimulationQuestionView: View {
     let questionNumber: Int
     let questionCount: Int
     let progress: Double
-    let isAnswerRevealed: Bool
-    let onRevealAnswer: () -> Void
+    let choices: [String]
+    let selectedAnswer: String?
+    let isAnswerSubmitted: Bool
+    let didAnswerCorrectly: Bool
+    let onSelectAnswer: (String) -> Void
     let onNextQuestion: () -> Void
 
     var body: some View {
@@ -91,21 +98,18 @@ private struct SimulationQuestionView: View {
 
                 Divider()
 
-                if isAnswerRevealed {
-                    answerSection
-                } else {
-                    Button(action: onRevealAnswer) {
-                        Label("Mostrar resposta", systemImage: "eye")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
+                choicesSection
+
+                if isAnswerSubmitted {
+                    feedbackSection
                 }
 
                 Button(action: onNextQuestion) {
                     Text(questionNumber == questionCount ? "Finalizar simulado" : "Próxima pergunta")
                         .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.borderedProminent)
+                .disabled(!isAnswerSubmitted)
             }
             .padding()
         }
@@ -133,30 +137,112 @@ private extension SimulationQuestionView {
         }
     }
 
-    var answerSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Label("Resposta", systemImage: "checkmark.circle.fill")
+    var choicesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Escolha uma resposta")
                 .font(.headline)
-                .foregroundStyle(.green)
 
-            Text(question.answer)
+            ForEach(Array(choices.enumerated()), id: \.offset) { index, choice in
+                Button {
+                    onSelectAnswer(choice)
+                } label: {
+                    HStack(alignment: .top, spacing: 12) {
+                        Text(optionLabel(for: index))
+                            .fontWeight(.bold)
+                            .frame(width: 28, height: 28)
+                            .background(optionColor(for: choice))
+                            .clipShape(Circle())
 
-            if let example = question.example {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Exemplo")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
+                        Text(choice)
+                            .multilineTextAlignment(.leading)
 
-                    Text(example)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+                        Spacer(minLength: 0)
+
+                        if isAnswerSubmitted && choice == question.answer {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        } else if isAnswerSubmitted && choice == selectedAnswer {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(optionBackground(for: choice))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(optionBorder(for: choice), lineWidth: 1)
+                    }
                 }
+                .buttonStyle(.plain)
+                .disabled(isAnswerSubmitted)
+            }
+        }
+    }
+
+    var feedbackSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label(
+                didAnswerCorrectly ? "Resposta correta!" : "Resposta incorreta",
+                systemImage: didAnswerCorrectly ? "checkmark.circle.fill" : "xmark.circle.fill"
+            )
+            .font(.headline)
+            .foregroundStyle(didAnswerCorrectly ? .green : .red)
+
+            if !didAnswerCorrectly {
+                Text("Resposta correta")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+
+                Text(question.answer)
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.green.opacity(0.1))
+        .background((didAnswerCorrectly ? Color.green : Color.red).opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+
+    func optionLabel(for index: Int) -> String {
+        String(UnicodeScalar(65 + index)!)
+    }
+
+    func optionColor(for choice: String) -> Color {
+        if isAnswerSubmitted && choice == question.answer {
+            return .green.opacity(0.2)
+        }
+
+        if isAnswerSubmitted && choice == selectedAnswer {
+            return .red.opacity(0.2)
+        }
+
+        return .accentColor.opacity(0.12)
+    }
+
+    func optionBackground(for choice: String) -> Color {
+        if isAnswerSubmitted && choice == question.answer {
+            return .green.opacity(0.1)
+        }
+
+        if isAnswerSubmitted && choice == selectedAnswer {
+            return .red.opacity(0.1)
+        }
+
+        return .gray.opacity(0.08)
+    }
+
+    func optionBorder(for choice: String) -> Color {
+        if isAnswerSubmitted && choice == question.answer {
+            return .green
+        }
+
+        if isAnswerSubmitted && choice == selectedAnswer {
+            return .red
+        }
+
+        return .gray.opacity(0.25)
     }
 }
 
@@ -166,6 +252,7 @@ private struct SimulationCompletionView: View {
     private var dismiss
 
     let questionCount: Int
+    let score: Int
     let onRestart: () -> Void
 
     var body: some View {
@@ -178,7 +265,7 @@ private struct SimulationCompletionView: View {
                 .font(.title2)
                 .fontWeight(.bold)
 
-            Text("Você revisou \(questionCount) perguntas. Continue praticando para chegar cada vez mais preparado.")
+            Text("Você acertou \(score) de \(questionCount) perguntas.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
 
