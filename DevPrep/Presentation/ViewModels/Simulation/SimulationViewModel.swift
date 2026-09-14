@@ -13,20 +13,38 @@ final class SimulationViewModel {
     static let questionCount = 10
 
     private let repository: QuestionRepository
+    private let optionBuilder: QuestionOptionBuilder
+    private let scoringService: SimulationScoringService
+    private let aiService: AIService
+    private let historyStore: SimulationHistoryStore
 
     private(set) var simulation: Simulation?
     private(set) var currentIndex = 0
     private(set) var selectedAnswer: String?
     private(set) var isAnswerSubmitted = false
+    private(set) var freeTextAnswer = ""
+    private(set) var answerEvaluation: AnswerEvaluation?
+    private(set) var isEvaluatingAnswer = false
     private(set) var isLoading = false
     private(set) var hasLoadError = false
     private(set) var isFinished = false
-    private(set) var score = 0
+    private(set) var simulationResult: SimulationResult?
 
-    private var answerChoicesByQuestionID: [String: [String]] = [:]
+    private var answerChoicesByQuestionID: [String: [AnswerOption]] = [:]
+    private var questionResults: [SimulationQuestionResult] = []
 
-    init(repository: QuestionRepository) {
+    init(
+        repository: QuestionRepository,
+        optionBuilder: QuestionOptionBuilder? = nil,
+        scoringService: SimulationScoringService? = nil,
+        aiService: AIService? = nil,
+        historyStore: SimulationHistoryStore? = nil
+    ) {
         self.repository = repository
+        self.optionBuilder = optionBuilder ?? QuestionOptionBuilder()
+        self.scoringService = scoringService ?? SimulationScoringService()
+        self.aiService = aiService ?? DefaultAIService()
+        self.historyStore = historyStore ?? SimulationHistoryStore()
     }
 
     var currentQuestion: Question? {
@@ -51,18 +69,18 @@ final class SimulationViewModel {
         return Double(questionNumber) / Double(questionCount)
     }
 
-    var currentChoices: [String] {
+    var currentChoices: [AnswerOption] {
         guard let questionID = currentQuestion?.id else { return [] }
         return answerChoicesByQuestionID[questionID] ?? []
     }
 
     var didAnswerCorrectly: Bool {
-        guard let selectedAnswer,
-              let currentQuestion else {
-            return false
-        }
+        answerEvaluation?.classification == .correct ||
+            (selectedAnswer != nil && selectedAnswer == currentQuestion?.answer)
+    }
 
-        return selectedAnswer == currentQuestion.answer
+    var score: Int {
+        questionResults.filter(\.isCorrect).count
     }
 
     func start() async {
@@ -72,8 +90,12 @@ final class SimulationViewModel {
         currentIndex = 0
         selectedAnswer = nil
         isAnswerSubmitted = false
-        score = 0
+        freeTextAnswer = ""
+        answerEvaluation = nil
+        isEvaluatingAnswer = false
+        simulationResult = nil
         answerChoicesByQuestionID = [:]
+        questionResults = []
 
         defer {
             isLoading = false
@@ -89,14 +111,13 @@ final class SimulationViewModel {
                 questions: selectedQuestions,
                 startedAt: Date()
             )
-            answerChoicesByQuestionID = Dictionary(
-                uniqueKeysWithValues: selectedQuestions.map { question in
-                    (
-                        question.id,
-                        makeChoices(for: question, from: allQuestions)
-                    )
-                }
-            )
+
+            for question in selectedQuestions where question.responseType == .multipleChoice {
+                answerChoicesByQuestionID[question.id] = try optionBuilder.buildOptions(
+                    for: question,
+                    from: allQuestions
+                )
+            }
         } catch {
             simulation = nil
             hasLoadError = true
@@ -106,7 +127,7 @@ final class SimulationViewModel {
 
     func selectAnswer(_ answer: String) {
         guard !isAnswerSubmitted,
-              currentChoices.contains(answer),
+              currentChoices.contains(where: { $0.text == answer }),
               let currentQuestion else {
             return
         }
@@ -114,12 +135,52 @@ final class SimulationViewModel {
         selectedAnswer = answer
         isAnswerSubmitted = true
 
-        if answer == currentQuestion.answer {
-            score += 1
+        questionResults.append(
+            scoringService.makeQuestionResult(
+                for: currentQuestion,
+                selectedAnswer: answer
+            )
+        )
+    }
+
+    func updateFreeTextAnswer(_ answer: String) {
+        guard !isAnswerSubmitted else { return }
+        freeTextAnswer = answer
+    }
+
+    func submitFreeTextAnswer() async {
+        guard !isAnswerSubmitted,
+              !isEvaluatingAnswer,
+              let currentQuestion,
+              !freeTextAnswer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+
+        isEvaluatingAnswer = true
+        defer {
+            isEvaluatingAnswer = false
+        }
+
+        do {
+            let evaluation = try await aiService.evaluate(
+                answer: freeTextAnswer,
+                for: currentQuestion
+            )
+            answerEvaluation = evaluation
+            isAnswerSubmitted = true
+            questionResults.append(
+                scoringService.makeQuestionResult(
+                    for: currentQuestion,
+                    score: evaluation.score,
+                    isCorrect: evaluation.classification == .correct
+                )
+            )
+        } catch {
+            answerEvaluation = nil
         }
     }
 
-    func nextQuestion() {
+    func nextQuestion() async {
         guard let questionCount = simulation?.questions.count,
               questionCount > 0,
               isAnswerSubmitted else {
@@ -127,48 +188,33 @@ final class SimulationViewModel {
         }
 
         if currentIndex + 1 >= questionCount {
-            isFinished = true
+            await completeSimulation()
         } else {
             currentIndex += 1
             selectedAnswer = nil
             isAnswerSubmitted = false
+            freeTextAnswer = ""
+            answerEvaluation = nil
         }
     }
-}
 
-private extension SimulationViewModel {
+    private func completeSimulation() async {
+        guard let simulation else { return }
 
-    func makeChoices(for question: Question, from allQuestions: [Question]) -> [String] {
-        let sameLevelAndCategory = allQuestions.filter {
-            $0.id != question.id &&
-            $0.category == question.category &&
-            $0.difficulty == question.difficulty
-        }
+        let baseResult = scoringService.makeResult(
+            for: simulation,
+            questionResults: questionResults
+        )
 
-        let sameCategory = allQuestions.filter {
-            $0.id != question.id &&
-            $0.category == question.category
-        }
+        let summary = try? await aiService.summarize(result: baseResult)
+        let finalResult = scoringService.makeResult(
+            for: simulation,
+            questionResults: questionResults,
+            aiSummary: summary
+        )
 
-        let remainingQuestions = allQuestions.filter {
-            $0.id != question.id
-        }
-
-        var choices = [question.answer]
-        let candidates = (
-            sameLevelAndCategory +
-            sameCategory +
-            remainingQuestions
-        ).shuffled()
-
-        for candidate in candidates where !choices.contains(candidate.answer) {
-            choices.append(candidate.answer)
-
-            if choices.count == 4 {
-                break
-            }
-        }
-
-        return choices.shuffled()
+        simulationResult = finalResult
+        historyStore.save(finalResult)
+        isFinished = true
     }
 }

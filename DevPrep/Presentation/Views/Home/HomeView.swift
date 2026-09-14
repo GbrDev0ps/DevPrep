@@ -118,6 +118,18 @@ private extension HomeView {
                     title: AppStrings.Home.simulations
                 )
             }
+
+            NavigationLink {
+
+                SimulationHistoryView()
+
+            } label: {
+
+                HomeActionCard(
+                    icon: "clock.arrow.circlepath",
+                    title: AppStrings.Home.history
+                )
+            }
         }
     }
 }

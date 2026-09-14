@@ -33,6 +33,20 @@
 		3E5A1E342FD5A10000A6136D /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E352FD5A10000A6136D /* FavoritesView.swift */; };
 		3E5A1E382FD5A10000A6136D /* SimulationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E392FD5A10000A6136D /* SimulationViewModel.swift */; };
 		3E5A1E3A2FD5A10000A6136D /* SimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E3B2FD5A10000A6136D /* SimulationView.swift */; };
+		3E5A1E3E2FD5A10000A6136D /* QuestionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E3F2FD5A10000A6136D /* QuestionType.swift */; };
+		3E5A1E402FD5A10000A6136D /* ResponseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E412FD5A10000A6136D /* ResponseType.swift */; };
+		3E5A1E422FD5A10000A6136D /* AnswerEvaluation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E432FD5A10000A6136D /* AnswerEvaluation.swift */; };
+		3E5A1E442FD5A10000A6136D /* QuestionOptionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E452FD5A10000A6136D /* QuestionOptionBuilder.swift */; };
+		3E5A1E462FD5A10000A6136D /* SimulationScoringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E472FD5A10000A6136D /* SimulationScoringService.swift */; };
+		3E5A1E502FD5A10000A6136D /* QuestionDomainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E512FD5A10000A6136D /* QuestionDomainTests.swift */; };
+		3E5A1E602FD5A10000A6136D /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E612FD5A10000A6136D /* AIService.swift */; };
+		3E5A1E622FD5A10000A6136D /* OfflineAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E632FD5A10000A6136D /* OfflineAIService.swift */; };
+		3E5A1E642FD5A10000A6136D /* FoundationModelsAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E652FD5A10000A6136D /* FoundationModelsAIService.swift */; };
+		3E5A1E662FD5A10000A6136D /* DefaultAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E672FD5A10000A6136D /* DefaultAIService.swift */; };
+		3E5A1E692FD5A10000A6136D /* SimulationHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E6A2FD5A10000A6136D /* SimulationHistoryStore.swift */; };
+		3E5A1E6B2FD5A10000A6136D /* QuestionAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E6C2FD5A10000A6136D /* QuestionAssistantViewModel.swift */; };
+		3E5A1E6D2FD5A10000A6136D /* QuestionAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E6E2FD5A10000A6136D /* QuestionAssistantView.swift */; };
+		3E5A1E712FD5A10000A6136D /* SimulationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A1E722FD5A10000A6136D /* SimulationHistoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +77,21 @@
 		3E5A1E352FD5A10000A6136D /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		3E5A1E392FD5A10000A6136D /* SimulationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationViewModel.swift; sourceTree = "<group>"; };
 		3E5A1E3B2FD5A10000A6136D /* SimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationView.swift; sourceTree = "<group>"; };
+		3E5A1E3F2FD5A10000A6136D /* QuestionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionType.swift; sourceTree = "<group>"; };
+		3E5A1E412FD5A10000A6136D /* ResponseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseType.swift; sourceTree = "<group>"; };
+		3E5A1E432FD5A10000A6136D /* AnswerEvaluation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerEvaluation.swift; sourceTree = "<group>"; };
+		3E5A1E452FD5A10000A6136D /* QuestionOptionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionOptionBuilder.swift; sourceTree = "<group>"; };
+		3E5A1E472FD5A10000A6136D /* SimulationScoringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationScoringService.swift; sourceTree = "<group>"; };
+		3E5A1E512FD5A10000A6136D /* QuestionDomainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDomainTests.swift; sourceTree = "<group>"; };
+		3E5A1E532FD5A10000A6136D /* DevPrepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevPrepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E5A1E612FD5A10000A6136D /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		3E5A1E632FD5A10000A6136D /* OfflineAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAIService.swift; sourceTree = "<group>"; };
+		3E5A1E652FD5A10000A6136D /* FoundationModelsAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundationModelsAIService.swift; sourceTree = "<group>"; };
+		3E5A1E672FD5A10000A6136D /* DefaultAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAIService.swift; sourceTree = "<group>"; };
+		3E5A1E6A2FD5A10000A6136D /* SimulationHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationHistoryStore.swift; sourceTree = "<group>"; };
+		3E5A1E6C2FD5A10000A6136D /* QuestionAssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAssistantViewModel.swift; sourceTree = "<group>"; };
+		3E5A1E6E2FD5A10000A6136D /* QuestionAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAssistantView.swift; sourceTree = "<group>"; };
+		3E5A1E722FD5A10000A6136D /* SimulationHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationHistoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				3E5A1DEB2FD591D000A6136D /* DevPrep */,
+				3E5A1E522FD5A10000A6136D /* DevPrepTests */,
 				3E5A1DDB2FD591AC00A6136D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				3E5A1DDA2FD591AC00A6136D /* DevPrep.app */,
+				3E5A1E532FD5A10000A6136D /* DevPrepTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +150,7 @@
 		3E5A1DF02FD591E100A6136D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				3E5A1E482FD5A10000A6136D /* Services */,
 				3E5A1E0D2FD595E100A6136D /* UseCases */,
 			);
 			path = Domain;
@@ -127,10 +159,22 @@
 		3E5A1DF12FD591E900A6136D /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3E5A1E682FD5A10000A6136D /* AI */,
 				3E5A1E0C2FD595C700A6136D /* Errors */,
 				3E5A1E022FD593E800A6136D /* Repositories */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		3E5A1E682FD5A10000A6136D /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				3E5A1E672FD5A10000A6136D /* DefaultAIService.swift */,
+				3E5A1E652FD5A10000A6136D /* FoundationModelsAIService.swift */,
+				3E5A1E632FD5A10000A6136D /* OfflineAIService.swift */,
+				3E5A1E612FD5A10000A6136D /* AIService.swift */,
+			);
+			path = AI;
 			sourceTree = "<group>";
 		};
 		3E5A1DF22FD591ED00A6136D /* Core */ = {
@@ -146,13 +190,26 @@
 			children = (
 				3E5A1E312FD5A10000A6136D /* FavoritesStore.swift */,
 				3E5A1E1C2FD59D3E00A6136D /* AppStrings.swift */,
+				3E5A1E6A2FD5A10000A6136D /* SimulationHistoryStore.swift */,
 				3E5A1DFC2FD592E700A6136D /* UserProgress.swift */,
 				3E5A1DFA2FD592DA00A6136D /* Simulation.swift */,
+				3E5A1E432FD5A10000A6136D /* AnswerEvaluation.swift */,
 				3E5A1DF82FD5927100A6136D /* Difficulty.swift */,
 				3E5A1DF62FD5923500A6136D /* Category.swift */,
+				3E5A1E412FD5A10000A6136D /* ResponseType.swift */,
+				3E5A1E3F2FD5A10000A6136D /* QuestionType.swift */,
 				3E5A1DF42FD5920C00A6136D /* Question.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		3E5A1E482FD5A10000A6136D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3E5A1E472FD5A10000A6136D /* SimulationScoringService.swift */,
+				3E5A1E452FD5A10000A6136D /* QuestionOptionBuilder.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		3E5A1E022FD593E800A6136D /* Repositories */ = {
@@ -204,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				3E5A1E252FD59E7900A6136D /* QuestionListViewModel */,
+				3E5A1E6F2FD5A10000A6136D /* QuestionAssistant */,
 				3E5A1E362FD5A10000A6136D /* Favorites */,
 				3E5A1E3D2FD5A10000A6136D /* Simulation */,
 			);
@@ -233,6 +291,7 @@
 			children = (
 				3E5A1E282FD59F7E00A6136D /* QuestionDetail.swift */,
 				3E5A1E232FD59E0000A6136D /* QuestionList.swift */,
+				3E5A1E6E2FD5A10000A6136D /* QuestionAssistantView.swift */,
 			);
 			path = QuestionList;
 			sourceTree = "<group>";
@@ -243,6 +302,14 @@
 				3E5A1E262FD59E8300A6136D /* QuestionListViewModel.swift */,
 			);
 			path = QuestionListViewModel;
+			sourceTree = "<group>";
+		};
+		3E5A1E6F2FD5A10000A6136D /* QuestionAssistant */ = {
+			isa = PBXGroup;
+			children = (
+				3E5A1E6C2FD5A10000A6136D /* QuestionAssistantViewModel.swift */,
+			);
+			path = QuestionAssistant;
 			sourceTree = "<group>";
 		};
 		3E5A1E362FD5A10000A6136D /* Favorites */ = {
@@ -264,6 +331,7 @@
 		3E5A1E3C2FD5A10000A6136D /* Simulation */ = {
 			isa = PBXGroup;
 			children = (
+				3E5A1E722FD5A10000A6136D /* SimulationHistoryView.swift */,
 				3E5A1E3B2FD5A10000A6136D /* SimulationView.swift */,
 			);
 			path = Simulation;
@@ -275,6 +343,14 @@
 				3E5A1E392FD5A10000A6136D /* SimulationViewModel.swift */,
 			);
 			path = Simulation;
+			sourceTree = "<group>";
+		};
+		3E5A1E522FD5A10000A6136D /* DevPrepTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E5A1E512FD5A10000A6136D /* QuestionDomainTests.swift */,
+			);
+			path = DevPrepTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +375,26 @@
 			productReference = 3E5A1DDA2FD591AC00A6136D /* DevPrep.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3E5A1E572FD5A10000A6136D /* DevPrepTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E5A1E5D2FD5A10000A6136D /* Build configuration list for PBXNativeTarget "DevPrepTests" */;
+			buildPhases = (
+				3E5A1E542FD5A10000A6136D /* Sources */,
+				3E5A1E552FD5A10000A6136D /* Frameworks */,
+				3E5A1E562FD5A10000A6136D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E5A1E592FD5A10000A6136D /* PBXTargetDependency */,
+			);
+			name = DevPrepTests;
+			packageProductDependencies = (
+			);
+			productName = DevPrepTests;
+			productReference = 3E5A1E532FD5A10000A6136D /* DevPrepTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -311,6 +407,10 @@
 				TargetAttributes = {
 					3E5A1DD92FD591AC00A6136D = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					3E5A1E572FD5A10000A6136D = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 3E5A1DD92FD591AC00A6136D;
 					};
 				};
 			};
@@ -329,6 +429,7 @@
 			projectRoot = "";
 			targets = (
 				3E5A1DD92FD591AC00A6136D /* DevPrep */,
+				3E5A1E572FD5A10000A6136D /* DevPrepTests */,
 			);
 		};
 /* End PBXProject section */
@@ -340,6 +441,13 @@
 			files = (
 				3E5A1DEC2FD591D000A6136D /* Assets.xcassets in Resources */,
 				3E5A1E0B2FD595A400A6136D /* questions.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E5A1E562FD5A10000A6136D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,10 +482,56 @@
 				3E5A1DFB2FD592DC00A6136D /* Simulation.swift in Sources */,
 				3E5A1DFD2FD592E900A6136D /* UserProgress.swift in Sources */,
 				3E5A1DF72FD5923800A6136D /* Category.swift in Sources */,
+				3E5A1E3E2FD5A10000A6136D /* QuestionType.swift in Sources */,
+				3E5A1E402FD5A10000A6136D /* ResponseType.swift in Sources */,
+				3E5A1E422FD5A10000A6136D /* AnswerEvaluation.swift in Sources */,
+				3E5A1E442FD5A10000A6136D /* QuestionOptionBuilder.swift in Sources */,
+				3E5A1E462FD5A10000A6136D /* SimulationScoringService.swift in Sources */,
+				3E5A1E602FD5A10000A6136D /* AIService.swift in Sources */,
+				3E5A1E622FD5A10000A6136D /* OfflineAIService.swift in Sources */,
+				3E5A1E642FD5A10000A6136D /* FoundationModelsAIService.swift in Sources */,
+				3E5A1E662FD5A10000A6136D /* DefaultAIService.swift in Sources */,
+				3E5A1E692FD5A10000A6136D /* SimulationHistoryStore.swift in Sources */,
+				3E5A1E6B2FD5A10000A6136D /* QuestionAssistantViewModel.swift in Sources */,
+				3E5A1E6D2FD5A10000A6136D /* QuestionAssistantView.swift in Sources */,
+				3E5A1E712FD5A10000A6136D /* SimulationHistoryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E5A1E542FD5A10000A6136D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E5A1E502FD5A10000A6136D /* QuestionDomainTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E5A1E552FD5A10000A6136D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXContainerItemProxy section */
+		3E5A1E582FD5A10000A6136D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E5A1DD22FD591AC00A6136D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E5A1DD92FD591AC00A6136D;
+			remoteInfo = DevPrep;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXTargetDependency section */
+		3E5A1E592FD5A10000A6136D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E5A1DD92FD591AC00A6136D /* DevPrep */;
+			targetProxy = 3E5A1E582FD5A10000A6136D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3E5A1DE32FD591AD00A6136D /* Debug */ = {
@@ -580,6 +734,40 @@
 			};
 			name = Release;
 		};
+		3E5A1E5B2FD5A10000A6136D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.GBRmartins.DevPrepTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevPrep.app/DevPrep";
+			};
+			name = Debug;
+		};
+		3E5A1E5C2FD5A10000A6136D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.GBRmartins.DevPrepTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevPrep.app/DevPrep";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -597,6 +785,15 @@
 			buildConfigurations = (
 				3E5A1DE62FD591AD00A6136D /* Debug */,
 				3E5A1DE72FD591AD00A6136D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E5A1E5D2FD5A10000A6136D /* Build configuration list for PBXNativeTarget "DevPrepTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E5A1E5B2FD5A10000A6136D /* Debug */,
+				3E5A1E5C2FD5A10000A6136D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
