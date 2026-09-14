@@ -231,12 +231,16 @@
         "answer": "async/await expressa suspensão e retomada de operações assíncronas de forma linear, mantendo o código legível sem bloquear a thread da interface.",
         "category": "Swift",
         "difficulty": "Mid",
-        "questionType": "conceptual",
-        "responseType": "multipleChoice",
-        "distractors": [
-            "async/await torna toda chamada síncrona e executa sempre na MainActor",
-            "async/await elimina a necessidade de tratar erros de rede",
-            "async/await cria uma thread nova para cada linha da função"
+        "questionType": "openEnded",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica que async/await expressa suspensão sem bloquear a interface",
+            "Compara o fluxo linear com callbacks aninhados",
+            "Menciona tratamento de erros ou isolamento de contexto"
+        ],
+        "followUpQuestions": [
+            "Como você cancelaria uma tarefa de busca?",
+            "Quando usaria MainActor em uma ViewModel?"
         ]
     },
     {
@@ -627,12 +631,16 @@
         "answer": "A View declara como a interface deve ser para um determinado estado; quando o estado muda, SwiftUI calcula e aplica a atualização necessária.",
         "category": "SwiftUI",
         "difficulty": "Junior",
-        "questionType": "conceptual",
-        "responseType": "multipleChoice",
-        "distractors": [
-            "A View precisa localizar manualmente cada label e alterar seu frame",
-            "O código declarativo impede que qualquer estado mude depois da criação",
-            "A interface é escrita em XML e o estado é atualizado somente por constraints"
+        "questionType": "openEnded",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Define UI declarativa como descrição da interface a partir do estado",
+            "Explica que a mudança de estado provoca nova avaliação",
+            "Diferencia a abordagem declarativa da manipulação manual de Views"
+        ],
+        "followUpQuestions": [
+            "Como você evitaria efeitos colaterais durante a reavaliação?",
+            "Que parte da tela seria responsabilidade da ViewModel?"
         ]
     },
     {
