@@ -17,5 +17,6 @@ enum AppStrings {
 
         static let favorites = "Favoritos"
         static let simulations = "Simulados"
+        static let history = "Histórico"
     }
 }

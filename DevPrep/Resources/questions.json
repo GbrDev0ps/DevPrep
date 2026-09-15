@@ -1,702 +1,1595 @@
 [
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B1",
-        "title": "O que é um Optional em Swift?",
-        "answer": "Optional é um tipo que pode conter um valor ou nil. Ele é utilizado para representar a ausência de valor de forma segura.",
+        "title": "Ao decodificar um perfil, o campo avatarURL pode não existir. Como representar essa ausência com segurança em Swift?",
+        "answer": "Usar um Optional, como String?, que representa explicitamente a presença de um valor ou nil e exige tratamento antes do acesso.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Usar uma String vazia e assumir que ela sempre representa uma URL válida",
+            "Usar AnyObject para que o campo aceite qualquer valor em tempo de execução",
+            "Usar force unwrap para transformar qualquer valor ausente em uma URL"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B2",
-        "title": "Qual a diferença entre var e let?",
-        "answer": "let cria constantes imutáveis após a inicialização. var permite alterar o valor da variável durante a execução.",
+        "title": "Você precisa alterar o título de uma tela somente depois que ele for configurado. Quando escolher let ou var?",
+        "answer": "Usar let para um valor que não muda depois da inicialização e var para um valor que precisa ser alterado durante a execução.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Usar let no título e recriar a ViewController sempre que o texto mudar",
+            "Usar var para todos os valores, porque let só funciona em tipos primitivos",
+            "Usar let e modificar o valor por meio de uma extensão da classe"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B3",
-        "title": "O que é Type Inference?",
-        "answer": "É a capacidade do compilador inferir automaticamente o tipo de uma variável com base no valor atribuído.",
+        "title": "Por que o compilador aceita let timeout = 5 sem uma anotação explícita de tipo?",
+        "answer": "Porque o type inference deduz o tipo a partir do valor atribuído; nesse caso, timeout é inferido como Int.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Porque toda constante sem anotação é tratada como Any",
+            "Porque o tipo só é definido quando o aplicativo executa a primeira leitura",
+            "Porque Swift converte automaticamente Int para String quando necessário"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B4",
-        "title": "O que é Force Unwrapping?",
-        "answer": "É o uso do operador ! para acessar o valor de um Optional. Pode causar crash caso o valor seja nil.",
+        "title": "Uma API legada retorna nil em algumas respostas e o app está encerrando ao acessar valor!. Qual é a causa?",
+        "answer": "Force unwrapping com ! acessa um Optional sem tratar nil e causa runtime crash quando o valor não está presente.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "bugFix",
+        "responseType": "multipleChoice",
+        "codeExample": "let value: String? = nil\nprint(value!)",
+        "distractors": [
+            "O operador ! transforma nil em uma String vazia de forma segura",
+            "O crash acontece porque Optional só pode ser usado em código assíncrono",
+            "A solução é trocar ! por !! para tentar o acesso novamente"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B5",
-        "title": "O que é Optional Binding?",
-        "answer": "É uma forma segura de extrair o valor de um Optional utilizando if let ou guard let.",
+        "title": "Qual abordagem você usaria para exibir o nome do usuário apenas quando a API realmente o retornar?",
+        "answer": "Usar optional binding com if let ou guard let para extrair o valor somente quando o Optional contiver um valor.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "codeExample": "guard let name = profile.name else { return }\nshow(name)",
+        "distractors": [
+            "Usar force unwrap e tratar o crash no catch",
+            "Converter o Optional para Any e exibir sua descrição",
+            "Comparar o Optional com uma String vazia sem desembrulhá-lo"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B6",
-        "title": "Qual a diferença entre Struct e Class?",
-        "answer": "Struct é um Value Type e Class é um Reference Type. Structs são copiadas ao serem atribuídas, enquanto classes compartilham referência.",
+        "title": "Ao modelar uma configuração de tela que será copiada entre fluxos, por que uma struct pode ser preferível a uma class?",
+        "answer": "Struct é value type: atribuições criam cópias independentes. Class é reference type: duas variáveis podem apontar para a mesma instância mutável.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Classes não podem ter métodos, enquanto structs podem",
+            "Structs sempre vivem na heap e classes sempre vivem na stack",
+            "Classes não suportam protocolos e por isso não podem modelar telas"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B7",
-        "title": "O que é ARC?",
-        "answer": "Automatic Reference Counting é o mecanismo de gerenciamento de memória do Swift que libera objetos quando não existem mais referências fortes.",
+        "title": "Uma célula de tabela deixa de ser liberada porque um objeto mantém várias referências. O que o ARC faz?",
+        "answer": "ARC conta referências fortes para instâncias de classes e desaloca o objeto quando não resta nenhuma referência forte.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "ARC executa coleta de lixo em intervalos fixos e ignora referências fortes",
+            "ARC libera todas as instâncias assim que uma View sai da tela",
+            "ARC impede qualquer ciclo de referência automaticamente, sem weak ou unowned"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B8",
-        "title": "Quando utilizar guard?",
-        "answer": "Guard é utilizado para validações antecipadas e saídas rápidas da função, aumentando a legibilidade do código.",
+        "title": "Você valida autenticação, configuração e permissão antes de carregar uma tela. Por que guard melhora essa função?",
+        "answer": "guard permite validar condições no início e sair cedo quando falham, mantendo o caminho principal da função sem aninhamentos desnecessários.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "guard mantém a execução dentro do bloco e evita qualquer retorno",
+            "guard converte automaticamente todas as falhas em exceções recuperáveis",
+            "guard só pode ser usado em inicializadores e não em funções"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1B9",
-        "title": "O que é uma Closure?",
-        "answer": "Closure é um bloco de código autocontido que pode ser armazenado e executado posteriormente.",
+        "title": "Um botão deve executar uma ação recebida pela tela sem criar uma subclasse específica. Qual recurso Swift atende esse caso?",
+        "answer": "Uma closure é um bloco de código autocontido que pode ser armazenado e passado como valor para ser executado depois.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Um Optional que executa seu valor automaticamente ao ser lido",
+            "Um enum sem casos que substitui todos os callbacks",
+            "Uma extension que altera o comportamento de qualquer instância global"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C0",
-        "title": "O que é um Enum?",
-        "answer": "Enum é um tipo que permite definir um conjunto finito de casos relacionados.",
+        "title": "Como modelar os estados loading, loaded e failed de uma busca para impedir combinações inválidas?",
+        "answer": "Usar um enum com casos relacionados, possivelmente associados, representa um conjunto finito de estados e torna o switch exaustivo.",
         "category": "Swift",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Criar três Booleans independentes e permitir que todos sejam true",
+            "Usar uma classe sem propriedades para que o compilador crie os estados",
+            "Usar Any para armazenar loading, dados e erro sem distinção"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C1",
-        "title": "O que são Protocols?",
-        "answer": "Protocols definem contratos que tipos podem adotar para fornecer funcionalidades específicas.",
+        "title": "Como você usaria um protocolo para permitir que uma ViewModel receba tanto um repositório real quanto um mock?",
+        "answer": "Definir no protocolo o contrato que a ViewModel precisa e fazer as implementações real e mock adotarem esse contrato.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Colocar todas as implementações concretas dentro do protocolo",
+            "Usar AnyObject e fazer a ViewModel descobrir métodos por reflexão",
+            "Duplicar a ViewModel, uma versão para produção e outra para testes"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C2",
-        "title": "O que é Protocol Oriented Programming?",
-        "answer": "É um paradigma incentivado pelo Swift que utiliza protocolos e extensões para composição de comportamentos.",
+        "title": "Em um módulo de pagamentos, por que composição por protocolos pode reduzir o acoplamento?",
+        "answer": "Protocolos e extensões permitem compor capacidades por contrato, facilitando substituições e evitando hierarquias de herança desnecessárias.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "architectureDecision",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Protocolos garantem que não haverá estado mutável em nenhuma implementação",
+            "Extensões transformam automaticamente value types em subclasses",
+            "A composição elimina a necessidade de testar as implementações concretas"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C3",
-        "title": "Qual a diferença entre Any e AnyObject?",
-        "answer": "Any representa qualquer tipo. AnyObject representa apenas instâncias de classes.",
+        "title": "Você precisa aceitar um valor de qualquer tipo, mas em outra API só instâncias de classes devem ser aceitas. Qual distinção é correta?",
+        "answer": "Any representa qualquer tipo, incluindo structs e enums; AnyObject representa apenas instâncias de classes.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Any aceita apenas classes e AnyObject aceita structs e enums",
+            "Any e AnyObject são sinônimos, mas Any é mais rápido",
+            "AnyObject é usado para Optional e Any é usado somente para closures"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C4",
-        "title": "O que é um Generics?",
-        "answer": "Generics permitem criar código reutilizável que funciona com diferentes tipos mantendo type safety.",
+        "title": "Uma função de paginação deve funcionar com diferentes modelos mantendo type safety. Qual recurso escolher?",
+        "answer": "Generics permitem escrever uma implementação reutilizável para vários tipos sem perder as verificações estáticas do compilador.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Usar Any em todos os parâmetros e converter o resultado com force cast",
+            "Criar uma função diferente para cada modelo, mesmo com o mesmo comportamento",
+            "Usar NSObject porque generics só funcionam em APIs Objective-C"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C5",
-        "title": "O que são Extensions?",
-        "answer": "Extensions permitem adicionar funcionalidades a tipos existentes sem modificar sua implementação original.",
+        "title": "Você não controla uma struct de um SDK, mas precisa adicionar uma propriedade calculada para a tela. O que usar?",
+        "answer": "Uma extension adiciona comportamentos e propriedades computadas a um tipo existente sem alterar sua implementação original.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Subclasse, porque toda struct pode ser herdada em Swift",
+            "Swizzling, porque extensions substituem métodos armazenados em runtime",
+            "Outro módulo com o mesmo nome do tipo para sobrescrever sua definição"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C6",
-        "title": "O que é Result?",
-        "answer": "Result é um enum utilizado para representar operações que podem retornar sucesso ou falha.",
+        "title": "Uma chamada de rede pode retornar dados ou um erro de domínio. Como representar os dois resultados explicitamente?",
+        "answer": "Result<Success, Failure> representa um sucesso com valor ou uma falha com erro, permitindo tratar ambos os caminhos de forma explícita.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Optional, porque nil sempre contém informação suficiente sobre o erro",
+            "Tuple com dois valores obrigatórios, mesmo quando um deles não existe",
+            "Bool, porque true e false conseguem transportar o payload completo"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C7",
-        "title": "O que é async/await?",
-        "answer": "É a sintaxe moderna de concorrência do Swift para escrever código assíncrono de forma mais legível.",
+        "title": "Uma ViewModel precisa aguardar uma API sem bloquear a interface e sem aninhar callbacks. Qual benefício de async/await?",
+        "answer": "async/await expressa suspensão e retomada de operações assíncronas de forma linear, mantendo o código legível sem bloquear a thread da interface.",
         "category": "Swift",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "openEnded",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica que async/await expressa suspensão sem bloquear a interface",
+            "Compara o fluxo linear com callbacks aninhados",
+            "Menciona tratamento de erros ou isolamento de contexto"
+        ],
+        "followUpQuestions": [
+            "Como você cancelaria uma tarefa de busca?",
+            "Quando usaria MainActor em uma ViewModel?"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C8",
-        "title": "O que são Actors?",
-        "answer": "Actors protegem estado mutável contra condições de corrida em ambientes concorrentes.",
+        "title": "Analise este contador compartilhado por duas tarefas. Como evitar uma corrida de dados?",
+        "answer": "Isolar o estado mutável em um actor e acessar suas propriedades com await garante exclusão segura entre tarefas concorrentes.",
         "category": "Swift",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "codeAnalysis",
+        "responseType": "freeText",
+        "codeExample": "final class Counter {\n    var value = 0\n    func increment() { value += 1 }\n}",
+        "evaluationCriteria": [
+            "Identifica que acessos concorrentes ao estado mutável podem causar data race",
+            "Propõe actor ou outra sincronização adequada",
+            "Explica o custo de isolamento e o uso de await quando aplicável"
+        ],
+        "followUpQuestions": [
+            "Como você testaria a solução sob concorrência?",
+            "Quando um lock seria uma escolha melhor que actor?"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A1C9",
-        "title": "Explique Copy-on-Write.",
-        "answer": "É uma otimização utilizada por tipos de valor que copia os dados apenas quando uma modificação ocorre.",
+        "title": "Por que uma cópia de Array em Swift pode ser barata até que uma das cópias seja alterada?",
+        "answer": "Copy-on-Write compartilha o armazenamento entre cópias e cria uma cópia física somente quando uma delas sofre mutação.",
         "category": "Swift",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "codeAnalysis",
+        "responseType": "freeText",
+        "codeExample": "var first = [1, 2, 3]\nvar second = first\nsecond.append(4)",
+        "evaluationCriteria": [
+            "Explica o compartilhamento inicial do armazenamento",
+            "Identifica a cópia no momento da mutação",
+            "Relaciona o comportamento a value semantics e performance"
+        ],
+        "followUpQuestions": [
+            "Como o comportamento mudaria se o elemento fosse uma class?",
+            "Como investigaria uma cópia inesperada em um perfil de memória?"
+        ]
     },
     {
         "id": "A1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1A2D0",
-        "title": "Como evitar Retain Cycles?",
-        "answer": "Utilizando referências weak ou unowned quando apropriado e analisando o ciclo de vida dos objetos.",
+        "title": "Uma closure guardada por uma ViewModel captura a própria ViewModel e impede sua liberação. Como corrigir?",
+        "answer": "Quebrar o ciclo usando uma captura weak, quando a closure não precisa manter o objeto vivo, e garantir que o ciclo de propriedade seja realmente necessário.",
         "category": "Swift",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "bugFix",
+        "responseType": "freeText",
+        "codeExample": "viewModel.onUpdate = {\n    self.refresh()\n}",
+        "evaluationCriteria": [
+            "Identifica o ciclo entre o objeto e a closure armazenada",
+            "Propõe captura weak ou outra mudança de ownership apropriada",
+            "Explica quando weak é preferível a unowned para evitar crash"
+        ],
+        "followUpQuestions": [
+            "Como confirmaria o vazamento usando Instruments?",
+            "Em que situação unowned seria seguro?"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B1",
-        "title": "O que é UIKit?",
-        "answer": "UIKit é o framework responsável pela construção de interfaces gráficas em aplicações iOS utilizando componentes visuais nativos.",
+        "title": "Em um app UIKit, qual papel o framework exerce?",
+        "answer": "UIKit fornece os componentes e APIs para construir interfaces iOS, receber interação, gerenciar telas e desenhar conteúdo.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "UIKit é o banco local usado para persistir modelos do aplicativo",
+            "UIKit substitui o compilador Swift e gerencia tipos da linguagem",
+            "UIKit é um protocolo de navegação que funciona sem Views"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B2",
-        "title": "O que é UIView?",
-        "answer": "UIView é a classe base para todos os componentes visuais exibidos na tela em aplicações UIKit.",
+        "title": "Você precisa agrupar um label, uma imagem e um botão em uma mesma hierarquia. O que é uma UIView?",
+        "answer": "UIView é a base visual do UIKit: representa uma área retangular, pode conter subviews, desenhar conteúdo e responder a eventos.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "UIView é exclusivamente um objeto de rede sem representação visual",
+            "UIView só pode existir dentro de uma UITableViewCell",
+            "UIView é o arquivo de configuração que substitui Auto Layout"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B3",
-        "title": "Qual a função de um UIViewController?",
-        "answer": "UIViewController gerencia uma tela da aplicação, controlando sua interface e ciclo de vida.",
+        "title": "Qual é a responsabilidade principal de um UIViewController ao abrir a tela de detalhes?",
+        "answer": "UIViewController coordena a View, o ciclo de vida da tela, eventos de interface e transições dentro do fluxo apresentado.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Armazenar permanentemente todas as respostas da API em memória",
+            "Substituir o sistema de constraints por frames calculados automaticamente",
+            "Gerenciar exclusivamente o ciclo de vida do aplicativo inteiro"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B4",
-        "title": "O que é Auto Layout?",
-        "answer": "Auto Layout é o sistema de constraints utilizado para posicionar e dimensionar elementos da interface.",
+        "title": "Uma tela deve se adaptar a iPhone, iPad e Dynamic Type sem recalcular posições manualmente. Qual solução UIKit usar?",
+        "answer": "Usar Auto Layout com constraints que descrevem relações entre as Views permite que o sistema calcule o layout para diferentes tamanhos.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Fixar todos os frames com valores obtidos apenas no iPhone de teste",
+            "Criar uma tela diferente por resolução e escolher pelo tamanho da tela",
+            "Usar apenas transform para redimensionar a hierarquia inteira"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B5",
-        "title": "O que são Constraints?",
-        "answer": "Constraints definem regras de posicionamento e tamanho dos elementos visuais na interface.",
+        "title": "O que uma constraint de leading entre título e imagem descreve?",
+        "answer": "Uma constraint descreve uma relação de layout, como posição, tamanho ou alinhamento, entre atributos de Views e guias do sistema.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Uma regra de validação que impede o usuário de editar o título",
+            "Uma referência forte entre as duas Views para controlar memória",
+            "Uma fila que determina em qual thread o título será desenhado"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B6",
-        "title": "Qual a diferença entre Frame e Constraints?",
-        "answer": "Frame define posições fixas, enquanto Constraints adaptam a interface dinamicamente para diferentes dispositivos.",
+        "title": "Por que misturar frame manual com Auto Layout em uma mesma View pode gerar comportamento inesperado?",
+        "answer": "O frame é uma geometria calculada imediatamente, enquanto Auto Layout recalcula a geometria a partir de constraints durante o layout.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Frame e constraints são sinônimos e sempre têm precedência igual",
+            "Constraints só funcionam em Views sem frame inicial",
+            "Frame serve apenas para cores e constraints servem apenas para memória"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B7",
-        "title": "O que é um UITableView?",
-        "answer": "UITableView é um componente utilizado para exibir listas verticais de dados reutilizando células.",
+        "title": "Uma lista de pedidos precisa renderizar milhares de linhas com rolagem. Qual componente é o mais adequado?",
+        "answer": "UITableView exibe dados em linhas reutilizáveis e é adequada para listas lineares com rolagem vertical.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "UILabel, porque ele cria células automaticamente para cada pedido",
+            "UIViewController, porque listas não devem ter DataSource",
+            "UIImageView, porque imagens controlam a rolagem de qualquer coleção"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B8",
-        "title": "O que é um UICollectionView?",
-        "answer": "UICollectionView permite exibir dados em layouts flexíveis, como grids e listas customizadas.",
+        "title": "A home terá cards em duas colunas, seções e tamanhos diferentes. Qual componente UIKit favorece esse layout?",
+        "answer": "UICollectionView suporta itens em múltiplas colunas, seções e layouts customizados, sendo adequada para grids e coleções.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "UITableView sem nenhuma configuração, porque ela só suporta uma célula fixa",
+            "UINavigationController, porque ele organiza cards em colunas",
+            "UIActivityIndicatorView, porque ele virtualiza todos os itens"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1B9",
-        "title": "O que é Reuse Identifier?",
-        "answer": "É um identificador utilizado para reutilizar células e melhorar a performance de listas.",
+        "title": "Por que uma célula precisa de um reuse identifier ao ser registrada numa lista?",
+        "answer": "O identificador permite que a lista retire e reutilize células do tipo correto, reduzindo alocações durante a rolagem.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "O identificador é a chave de autenticação do usuário da lista",
+            "O identificador impede a célula de receber qualquer atualização de dados",
+            "O identificador define a posição final da célula sem precisar de DataSource"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C0",
-        "title": "Qual a diferença entre push e present?",
-        "answer": "Push utiliza UINavigationController para empilhar telas. Present apresenta uma tela modal.",
+        "title": "Ao tocar em um pedido, você quer empilhar uma tela de detalhes no fluxo atual. Quando escolher push em vez de present?",
+        "answer": "push adiciona uma ViewController à pilha de navegação e preserva o fluxo de voltar; present exibe uma apresentação modal independente da pilha.",
         "category": "UIKit",
-        "difficulty": "Junior"
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "push sempre abre uma nova janela do app e present só muda o título",
+            "present é obrigatório para qualquer tela que tenha uma navigation bar",
+            "push e present têm exatamente o mesmo comportamento de ciclo de vida"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C1",
-        "title": "Explique o ciclo de vida de um UIViewController.",
-        "answer": "Os principais métodos são viewDidLoad, viewWillAppear, viewDidAppear, viewWillDisappear e viewDidDisappear.",
+        "title": "Explique a ordem e o uso prático de viewDidLoad, viewWillAppear e viewDidAppear em uma tela UIKit.",
+        "answer": "viewDidLoad ocorre uma vez após carregar a View e serve para configuração inicial; viewWillAppear ocorre antes de cada exibição; viewDidAppear ocorre depois que a tela está visível.",
         "category": "UIKit",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "codeAnalysis",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Diferencia configuração única de eventos executados a cada aparição",
+            "Coloca viewDidLoad antes de viewWillAppear e viewDidAppear",
+            "Dá um exemplo coerente, como configurar UI ou atualizar dados"
+        ],
+        "followUpQuestions": [
+            "Onde você removeria um observer ao sair da tela?",
+            "Por que uma busca pesada não deve necessariamente ficar em viewDidAppear?"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C2",
-        "title": "Quando utilizar viewDidLoad?",
-        "answer": "Para configurações iniciais executadas apenas uma vez durante o ciclo de vida da tela.",
+        "title": "Onde configurar uma célula, seus subviews e constraints para evitar repetir o trabalho a cada aparição da tela?",
+        "answer": "viewDidLoad é chamado quando a View é carregada pela primeira vez e é apropriado para configuração inicial da interface.",
         "category": "UIKit",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "viewDidAppear, porque é o único método que pode criar subviews",
+            "deinit, porque a célula deve ser configurada ao ser desalocada",
+            "applicationWillTerminate, porque toda tela é criada no encerramento"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C3",
-        "title": "Quando utilizar viewWillAppear?",
-        "answer": "Para atualizar dados ou interface sempre antes da tela aparecer ao usuário.",
+        "title": "Ao voltar de um editor, a lista precisa refletir o pedido salvo. Em qual momento atualizar os dados?",
+        "answer": "viewWillAppear é apropriado para uma atualização leve que deve acontecer antes de cada exibição da tela.",
         "category": "UIKit",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "viewDidLoad, pois ele executa novamente sempre que a tela volta à frente",
+            "loadView, pois ele é chamado depois de qualquer mudança em outra tela",
+            "deinit, pois só é possível atualizar uma lista quando ela é desalocada"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C4",
-        "title": "O que é Delegation?",
-        "answer": "É um padrão de design utilizado para comunicação entre objetos através de protocolos.",
+        "title": "Uma UITextField deve comunicar a alteração de texto sem conhecer a ViewController que a consome. Como explicar delegation?",
+        "answer": "Delegation define um contrato para que um objeto comunique eventos a outro sem depender diretamente da implementação concreta do receptor.",
         "category": "UIKit",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica a relação entre objeto que delega e objeto delegado",
+            "Menciona um protocolo ou contrato de comunicação",
+            "Relaciona delegation a baixo acoplamento e eventos UIKit"
+        ],
+        "followUpQuestions": [
+            "Quando um closure seria mais simples que delegation?",
+            "Como evitar um ciclo de retenção entre delegate e delegado?"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C5",
-        "title": "O que é DataSource?",
-        "answer": "É o objeto responsável por fornecer os dados exibidos em componentes como UITableView e UICollectionView.",
+        "title": "Qual objeto informa quantas linhas existem e qual conteúdo cada linha deve exibir em uma UITableView?",
+        "answer": "O DataSource fornece a quantidade de itens e configura o conteúdo das células para a UITableView.",
         "category": "UIKit",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "O Delegate armazena todos os modelos e cria a resposta da API",
+            "O NavigationController define o número de linhas com base na rota",
+            "O Auto Layout busca os dados diretamente no banco local"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C6",
-        "title": "Como registrar uma UITableViewCell?",
-        "answer": "Utilizando register(_:forCellReuseIdentifier:) ou através de Storyboards/XIBs.",
+        "title": "Por que registrar UITableViewCell com register antes de fazer dequeueReusableCell?",
+        "answer": "O registro informa à tabela como criar a célula quando não houver uma instância reutilizável disponível.",
         "category": "UIKit",
-        "difficulty": "Mid"
+        "difficulty": "Mid",
+        "questionType": "codeAnalysis",
+        "responseType": "multipleChoice",
+        "codeExample": "tableView.register(OrderCell.self, forCellReuseIdentifier: OrderCell.reuseID)",
+        "distractors": [
+            "register apenas define o texto inicial e não tem relação com reutilização",
+            "dequeue cria sempre uma célula nova, então register deve ser chamado depois",
+            "register substitui o DataSource e fornece automaticamente todos os pedidos"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C7",
-        "title": "O que são Diffable Data Sources?",
-        "answer": "São APIs modernas que simplificam atualizações de listas com animações e gerenciamento automático de mudanças.",
+        "title": "Uma lista recebe atualizações frequentes e precisa animar inserções sem inconsistências de índices. Qual API moderna escolher?",
+        "answer": "Diffable data source calcula a diferença entre snapshots e aplica atualizações de forma consistente, identificando itens por IDs estáveis.",
         "category": "UIKit",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "reloadData em cada mudança e manipulação manual de todos os índices",
+            "Um Timer que reconstrói a tabela a cada frame para manter a animação",
+            "Alterar diretamente o array interno da UITableView sem aplicar snapshot"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C8",
-        "title": "O que é Compositional Layout?",
-        "answer": "É uma API avançada para construção de layouts complexos e flexíveis em UICollectionView.",
+        "title": "Um catálogo precisa de seção horizontal de destaques e grade vertical de produtos. Qual solução UIKit atende melhor?",
+        "answer": "Compositional layout permite definir layouts por seção, combinando grupos, itens e dimensões diferentes em uma UICollectionView.",
         "category": "UIKit",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Uma única constraint fixa aplicada a todos os itens da coleção",
+            "UITableView com frames aleatórios calculados durante scroll",
+            "UINavigationBar, pois ela organiza qualquer seção de conteúdo"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B1C9",
-        "title": "Como evitar problemas de performance em listas?",
-        "answer": "Utilizando reutilização de células, carregamento assíncrono e evitando processamento pesado na main thread.",
+        "title": "A rolagem da lista cai de 60 fps para 20 fps quando imagens são carregadas. Que investigação e correções você faria?",
+        "answer": "Medir o trabalho no main thread, evitar processamento pesado em cellForRowAt, usar cache e carregamento assíncrono de imagens e garantir configuração idempotente das células.",
         "category": "UIKit",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "bugFix",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Relaciona a queda de frames a trabalho pesado no main thread",
+            "Propõe carregamento assíncrono e cache de imagens",
+            "Menciona Instruments, reutilização ou cancelamento de tarefas"
+        ],
+        "followUpQuestions": [
+            "Como evitar mostrar a imagem de uma célula que já foi reutilizada?",
+            "Qual métrica você acompanharia após a correção?"
+        ]
     },
     {
         "id": "B1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1B2D0",
-        "title": "Quais práticas modernas são recomendadas para UIKit atualmente?",
-        "answer": "MVVM, Diffable Data Sources, Compositional Layout, Async/Await e Dependency Injection são amplamente recomendados.",
+        "title": "Em um projeto UIKit novo, como equilibrar APIs modernas e compatibilidade com uma base existente?",
+        "answer": "Usar UIKit com diffable data source, compositional layout, células configuráveis e concorrência segura quando aplicável, introduzindo APIs modernas de forma incremental.",
         "category": "UIKit",
-        "difficulty": "Senior"
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Cita APIs modernas de listas ou células",
+            "Considera compatibilidade, migração incremental e testes",
+            "Relaciona a decisão a performance e manutenção"
+        ],
+        "followUpQuestions": [
+            "Como migraria uma tela legada sem reescrever o aplicativo inteiro?",
+            "Quando manteria uma solução antiga por compatibilidade?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B1",
-      "title": "O que é SwiftUI?",
-      "answer": "SwiftUI é um framework declarativo da Apple para construção de interfaces em todas as plataformas Apple.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B1",
+        "title": "Por que uma equipe poderia escolher SwiftUI para uma nova tela de configurações?",
+        "answer": "SwiftUI permite descrever a interface declarativamente e atualizá-la a partir do estado, com composição de Views e previews.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "SwiftUI é uma camada de persistência e não cria elementos visuais",
+            "SwiftUI exige que toda tela tenha um UIViewController proprietário",
+            "SwiftUI funciona apenas para widgets e não para telas do aplicativo"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B2",
-      "title": "O que é uma View em SwiftUI?",
-      "answer": "Uma View é um componente que descreve uma parte da interface do usuário.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B2",
+        "title": "Em SwiftUI, qual é a responsabilidade de uma View?",
+        "answer": "Uma View descreve uma parte da interface a partir de seus dados e composição, e o framework calcula a renderização necessária.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Uma View é uma instância mutável que deve ser mantida manualmente na tela",
+            "Uma View é apenas um arquivo JSON que o UIKit interpreta em runtime",
+            "Uma View executa todas as chamadas de rede para que a UI possa ser declarativa"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B3",
-      "title": "O que significa UI declarativa?",
-      "answer": "Significa descrever o estado desejado da interface ao invés de manipular diretamente os componentes.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B3",
+        "title": "O usuário altera um filtro e a lista deve refletir o novo valor. O que significa dizer que a UI é declarativa?",
+        "answer": "A View declara como a interface deve ser para um determinado estado; quando o estado muda, SwiftUI calcula e aplica a atualização necessária.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "openEnded",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Define UI declarativa como descrição da interface a partir do estado",
+            "Explica que a mudança de estado provoca nova avaliação",
+            "Diferencia a abordagem declarativa da manipulação manual de Views"
+        ],
+        "followUpQuestions": [
+            "Como você evitaria efeitos colaterais durante a reavaliação?",
+            "Que parte da tela seria responsabilidade da ViewModel?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B4",
-      "title": "O que é VStack?",
-      "answer": "VStack organiza elementos verticalmente.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B4",
+        "title": "Você quer empilhar título, subtítulo e botão verticalmente com espaçamento controlado. Qual container usar?",
+        "answer": "VStack organiza Views em uma coluna vertical e permite controlar alinhamento e espaçamento.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "HStack, porque ele empilha itens de cima para baixo",
+            "ZStack, porque ele sempre cria uma lista vertical virtualizada",
+            "NavigationStack, porque ele posiciona qualquer conteúdo em coluna"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B5",
-      "title": "O que é HStack?",
-      "answer": "HStack organiza elementos horizontalmente.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B5",
+        "title": "Como colocar um ícone à esquerda e o texto da pergunta à direita na mesma linha?",
+        "answer": "HStack organiza Views horizontalmente, permitindo posicionar o ícone e o texto lado a lado.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "VStack, que sempre organiza o conteúdo em uma linha horizontal",
+            "ZStack, que impede qualquer sobreposição entre os elementos",
+            "ForEach, que é o container indicado para duas Views fixas"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B6",
-      "title": "O que é ZStack?",
-      "answer": "ZStack organiza elementos em camadas sobrepostas.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B6",
+        "title": "Uma badge deve aparecer sobre o canto de uma imagem de curso. Qual container permite essa sobreposição?",
+        "answer": "ZStack sobrepõe Views no eixo de profundidade, permitindo colocar a badge sobre a imagem.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "HStack, que sempre coloca a badge fora da imagem em uma coluna separada",
+            "VStack, que transforma automaticamente a badge em overlay",
+            "List, que é o único container capaz de desenhar imagens"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B7",
-      "title": "Para que serve o NavigationStack?",
-      "answer": "NavigationStack gerencia navegação hierárquica entre telas em SwiftUI.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B7",
+        "title": "Ao tocar em uma categoria, você precisa navegar para a lista de perguntas e preservar o botão voltar. Qual API usar?",
+        "answer": "NavigationStack gerencia uma pilha de navegação e permite declarar destinos para as rotas do fluxo.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "ZStack, porque ele armazena todas as telas sobrepostas",
+            "ScrollView, porque rolar a tela cria automaticamente uma nova rota",
+            "Environment, porque ele substitui a pilha de navegação por estado global"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B8",
-      "title": "O que é um Modifier?",
-      "answer": "Modifier é utilizado para alterar aparência ou comportamento de uma View.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B8",
+        "title": "O que o modifier .padding(.horizontal) representa no código de uma View?",
+        "answer": "Modifier é uma operação que retorna uma nova descrição da View com aparência, layout ou comportamento adicional.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Uma alteração global e mutável aplicada diretamente a todas as Views do app",
+            "Uma constraint UIKit que só funciona depois de chamar layoutIfNeeded",
+            "Uma closure que executa a View uma única vez no ciclo de vida"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B9",
-      "title": "O que é @State?",
-      "answer": "@State é utilizado para armazenar estado local e reativo em uma View.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1B9",
+        "title": "Uma tela possui um contador local que somente ela cria e altera. Qual property wrapper usar?",
+        "answer": "@State é apropriado para estado local controlado pela própria View; mudanças nele invalidam a descrição da interface.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "codeExample": "@State private var isExpanded = false",
+        "distractors": [
+            "@Binding, porque a View deve criar a fonte de verdade em outra tela",
+            "@EnvironmentObject, porque qualquer estado local precisa ser global",
+            "@Published, porque View sempre deve observar uma classe externa"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C0",
-      "title": "O que é @Binding?",
-      "answer": "@Binding cria uma referência bidirecional para um valor gerenciado por outra View.",
-      "category": "SwiftUI",
-      "difficulty": "Junior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C0",
+        "title": "Um componente filho precisa alternar o mesmo isPresented controlado pela tela pai. Qual wrapper expressa esse contrato?",
+        "answer": "@Binding cria uma referência de leitura e escrita para um valor cuja fonte de verdade pertence a outro componente.",
+        "category": "SwiftUI",
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "codeExample": "struct FilterToggle: View {\n    @Binding var isEnabled: Bool\n}",
+        "distractors": [
+            "@State, porque o filho deve criar uma segunda fonte independente",
+            "@Environment, porque Binding só funciona para objetos de referência",
+            "@StateObject, porque qualquer Bool precisa de uma classe observável"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C1",
-      "title": "Qual a diferença entre @State e @Binding?",
-      "answer": "@State é dono do estado. @Binding recebe acesso ao estado de outro componente.",
-      "category": "SwiftUI",
-      "difficulty": "Mid"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C1",
+        "title": "Explique a diferença entre @State e @Binding quando um formulário é dividido em componentes.",
+        "answer": "@State pertence ao componente que mantém a fonte de verdade; @Binding permite que outro componente leia e altere essa mesma fonte.",
+        "category": "SwiftUI",
+        "difficulty": "Mid",
+        "questionType": "codeAnalysis",
+        "responseType": "freeText",
+        "codeExample": "struct Parent: View {\n    @State private var name = \"\"\n    var body: some View { Child(name: $name) }\n}",
+        "evaluationCriteria": [
+            "Identifica State como fonte de verdade local",
+            "Identifica Binding como acesso de leitura e escrita compartilhado",
+            "Explica o uso do projected value com o prefixo $"
+        ],
+        "followUpQuestions": [
+            "Quando você elevaria esse estado para uma ViewModel?",
+            "O que acontece se o filho receber apenas String sem Binding?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C2",
-      "title": "O que é Observable?",
-      "answer": "Observable permite que mudanças em um objeto atualizem automaticamente as Views dependentes.",
-      "category": "SwiftUI",
-      "difficulty": "Mid"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C2",
+        "title": "Uma ViewModel tem propriedades que mudam e várias Views precisam reagir. Qual papel o protocolo Observable cumpre?",
+        "answer": "Observable permite que o sistema acompanhe leituras de propriedades observáveis e atualize as Views que dependem delas quando o estado muda.",
+        "category": "SwiftUI",
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "codeExample": "@Observable final class QuestionsModel {\n    var questions: [Question] = []\n}",
+        "distractors": [
+            "Observable persiste propriedades automaticamente no UserDefaults",
+            "Observable executa todas as alterações em uma thread de background",
+            "Observable substitui protocolos de repositório e faz a chamada HTTP"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C3",
-      "title": "O que é @Environment?",
-      "answer": "@Environment fornece acesso a valores compartilhados pelo ambiente da aplicação.",
-      "category": "SwiftUI",
-      "difficulty": "Mid"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C3",
+        "title": "Um tema de cores deve estar disponível em várias telas sem passar por todos os inicializadores. Quando usar @Environment?",
+        "answer": "@Environment lê valores ou dependências fornecidos pelo ambiente da hierarquia, como locale, dismiss ou dependências próprias.",
+        "category": "SwiftUI",
+        "difficulty": "Mid",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "@Environment grava automaticamente o tema em um banco remoto",
+            "@Environment cria uma cópia independente da dependência em cada View",
+            "@Environment só pode ser usado para variáveis locais não compartilhadas"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C4",
-      "title": "O que é @EnvironmentObject?",
-      "answer": "@EnvironmentObject injeta dependências observáveis em múltiplas Views.",
-      "category": "SwiftUI",
-      "difficulty": "Mid"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C4",
+        "title": "Qual risco existe ao usar dependência global para uma ViewModel apenas porque @EnvironmentObject é conveniente?",
+        "answer": "Uma dependência global pode esconder o contrato da View, dificultar testes e causar falha em runtime se o objeto não for injetado na hierarquia.",
+        "category": "SwiftUI",
+        "difficulty": "Mid",
+        "questionType": "architectureDecision",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "EnvironmentObject impede que a View seja atualizada quando o objeto muda",
+            "EnvironmentObject só funciona em UIKit e não pode compilar em SwiftUI",
+            "EnvironmentObject torna toda propriedade automaticamente thread-safe"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C5",
-      "title": "Como funciona o ciclo de atualização das Views?",
-      "answer": "SwiftUI recalcula o body quando estados observados sofrem alterações.",
-      "category": "SwiftUI",
-      "difficulty": "Mid"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C5",
+        "title": "Por que uma View SwiftUI pode ser reavaliada várias vezes sem significar que toda a tela foi recriada?",
+        "answer": "SwiftUI reavalia a descrição value type da View quando dependências mudam e compara a hierarquia para atualizar somente o necessário.",
+        "category": "SwiftUI",
+        "difficulty": "Mid",
+        "questionType": "codeAnalysis",
+        "responseType": "freeText",
+        "codeExample": "var body: some View {\n    Text(model.title)\n        .task { await model.load() }\n}",
+        "evaluationCriteria": [
+            "Diferencia reavaliação de body de recriação física de toda a interface",
+            "Relaciona atualização às dependências lidas pela View",
+            "Menciona cuidado com efeitos colaterais e tarefas"
+        ],
+        "followUpQuestions": [
+            "Como evitar iniciar uma chamada de rede várias vezes?",
+            "Qual a diferença entre identidade estrutural e estado persistente?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C6",
-      "title": "O que é LazyVStack?",
-      "answer": "LazyVStack carrega elementos sob demanda para melhorar performance em listas grandes.",
-      "category": "SwiftUI",
-      "difficulty": "Mid"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C6",
+        "title": "Uma lista de perguntas é longa e você só quer construir os itens conforme aparecem. Qual container usar?",
+        "answer": "LazyVStack cria seus filhos sob demanda durante a rolagem, reduzindo o trabalho inicial de listas grandes.",
+        "category": "SwiftUI",
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "VStack sempre virtualiza os itens e tem o mesmo comportamento lazy",
+            "ZStack remove automaticamente itens que saíram da tela",
+            "HStack é obrigatório para qualquer lista com mais de dez elementos"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C7",
-      "title": "Quando usar GeometryReader?",
-      "answer": "Quando é necessário obter informações de tamanho e posicionamento da interface.",
-      "category": "SwiftUI",
-      "difficulty": "Senior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C7",
+        "title": "Você precisa medir a largura disponível para escolher entre uma coluna e duas no iPad. Como usar GeometryReader com cuidado?",
+        "answer": "GeometryReader fornece o espaço proposto e a geometria disponível; deve ser usado pontualmente, porque pode ocupar todo o espaço proposto e afetar o layout.",
+        "category": "SwiftUI",
+        "difficulty": "Senior",
+        "questionType": "practicalScenario",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica que GeometryReader fornece tamanho e coordenadas",
+            "Propõe decisão responsiva baseada na largura",
+            "Menciona o risco de alterar a proposta de layout ou ocupar espaço excessivo"
+        ],
+        "followUpQuestions": [
+            "Quando uma ViewThatFits seria mais simples?",
+            "Como testaria o layout em rotação e Split View?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C8",
-      "title": "Como otimizar performance em SwiftUI?",
-      "answer": "Utilizando estados adequados, Lazy containers, identificadores corretos e evitando recomputações desnecessárias.",
-      "category": "SwiftUI",
-      "difficulty": "Senior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C8",
+        "title": "Uma tela SwiftUI ficou lenta após adicionar imagens e cálculos no body. Que medidas priorizar?",
+        "answer": "Manter o body barato, mover trabalho para ViewModel ou tarefas assíncronas, usar carregamento e cache de imagens e garantir identidade estável em ForEach.",
+        "category": "SwiftUI",
+        "difficulty": "Senior",
+        "questionType": "bugFix",
+        "responseType": "freeText",
+        "codeExample": "var body: some View {\n    List(items) { item in\n        Text(expensiveFormat(item))\n    }\n}",
+        "evaluationCriteria": [
+            "Identifica trabalho caro durante a reavaliação do body",
+            "Propõe pré-processamento, cache ou execução assíncrona",
+            "Menciona identidade estável e medição de performance"
+        ],
+        "followUpQuestions": [
+            "Que instrumento usaria para confirmar a causa?",
+            "Como evitaria atualizar a lista inteira quando um item muda?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C9",
-      "title": "Como integrar SwiftUI com UIKit?",
-      "answer": "Utilizando UIViewRepresentable, UIViewControllerRepresentable e UIHostingController.",
-      "category": "SwiftUI",
-      "difficulty": "Senior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C1C9",
+        "title": "Como inserir uma tela SwiftUI em um fluxo UIKit existente sem migrar o aplicativo inteiro?",
+        "answer": "Usar UIHostingController para hospedar a View SwiftUI dentro da hierarquia UIKit, mantendo o fluxo existente e definindo uma ponte para dados ou callbacks.",
+        "category": "SwiftUI",
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Cita UIHostingController como ponte UIKit-SwiftUI",
+            "Explica como passar dados ou eventos entre os lados",
+            "Considera ciclo de vida e migração incremental"
+        ],
+        "followUpQuestions": [
+            "Como faria o caminho inverso, usando UIViewControllerRepresentable?",
+            "Como testaria a fronteira entre os dois frameworks?"
+        ]
     },
     {
-      "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C2D0",
-      "title": "Quais vantagens o SwiftUI oferece sobre UIKit?",
-      "answer": "Código mais conciso, previews em tempo real, integração nativa com estados reativos e desenvolvimento multiplataforma.",
-      "category": "SwiftUI",
-      "difficulty": "Senior"
+        "id": "C1F0A1B1-C1D1-E1F1-A1B1-C1D1E1F1C2D0",
+        "title": "Quais benefícios e trade-offs você apresentaria ao escolher SwiftUI para uma feature nova?",
+        "answer": "SwiftUI oferece descrição declarativa, composição, integração com estado e previews; a decisão deve considerar curva de aprendizado, APIs disponíveis, performance e convivência com UIKit.",
+        "category": "SwiftUI",
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Apresenta benefícios concretos de SwiftUI",
+            "Reconhece trade-offs e compatibilidade com UIKit",
+            "Relaciona a escolha aos requisitos e à capacidade da equipe"
+        ],
+        "followUpQuestions": [
+            "Qual feature você manteria em UIKit e por quê?",
+            "Como reduziria o risco de uma adoção gradual?"
+        ]
     },
     {
-      "id": "D1A1",
-      "title": "O que é arquitetura de software?",
-      "answer": "Arquitetura de software é a organização estrutural de um sistema, definindo responsabilidades, comunicação e separação de camadas.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A1",
+        "title": "O que arquitetura de software significa no contexto de um app iOS?",
+        "answer": "Arquitetura define responsabilidades, limites e dependências entre partes do sistema para que o app seja compreensível, testável e evolua com segurança.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Arquitetura é apenas escolher cores, fontes e o padrão visual do app",
+            "Arquitetura é uma lista de frameworks obrigatórios que toda tela deve importar",
+            "Arquitetura elimina a necessidade de decisões de produto e requisitos"
+        ]
     },
     {
-      "id": "D1A2",
-      "title": "Por que utilizar arquitetura em um aplicativo iOS?",
-      "answer": "Para melhorar manutenção, testabilidade, escalabilidade e organização do código.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A2",
+        "title": "Uma equipe pequena percebe que cada tela acessa a API e o UserDefaults diretamente. Por que introduzir limites arquiteturais?",
+        "answer": "Limites separam responsabilidades, facilitam testes e permitem trocar detalhes de infraestrutura sem alterar as telas.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Limites fazem todas as camadas compartilhar o mesmo estado global",
+            "Limites obrigam o app a usar uma dependência externa de injeção",
+            "Limites servem somente para aumentar a quantidade de arquivos do projeto"
+        ]
     },
     {
-      "id": "D1A3",
-      "title": "O que é MVC?",
-      "answer": "MVC significa Model-View-Controller. É uma arquitetura que separa dados, interface e lógica de controle.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A3",
+        "title": "No MVC tradicional de UIKit, como as responsabilidades costumam ser distribuídas?",
+        "answer": "Model representa dados e regras, View apresenta a interface e Controller coordena interação e fluxo entre elas.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Model desenha Views, View acessa banco e Controller contém apenas constantes",
+            "View executa todas as regras de negócio e Model gerencia navegação",
+            "Controller é um protocolo sem estado que substitui Model e View"
+        ]
     },
     {
-      "id": "D1A4",
-      "title": "Qual o principal problema do MVC no iOS?",
-      "answer": "Os ViewControllers tendem a acumular responsabilidades, gerando o conhecido Massive View Controller.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A4",
+        "title": "Uma UIViewController passou de 2.000 linhas e contém layout, chamadas de rede e regras de negócio. Como diagnosticar o problema?",
+        "answer": "O Controller está acumulando responsabilidades, o chamado Massive View Controller; separar apresentação, estado, navegação e acesso a dados reduz acoplamento.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Identifica o acúmulo de responsabilidades no Controller",
+            "Propõe separação coerente como ViewModel, Use Case ou Coordinator",
+            "Relaciona a mudança a testabilidade e manutenção"
+        ],
+        "followUpQuestions": [
+            "Qual primeira responsabilidade você extrairia?",
+            "Como evitaria apenas mover o problema para uma ViewModel gigante?"
+        ]
     },
     {
-      "id": "D1A5",
-      "title": "O que é MVVM?",
-      "answer": "MVVM significa Model-View-ViewModel. O ViewModel contém a lógica de apresentação e prepara os dados para a View.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A5",
+        "title": "Como o MVVM pode organizar uma tela de lista de perguntas?",
+        "answer": "A View exibe estado, a ViewModel coordena apresentação e ações, e o Model representa dados; dependências de dados podem ser injetadas na ViewModel.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "MVVM coloca toda regra na View para evitar qualquer classe intermediária",
+            "MVVM exige que Model conheça diretamente cada botão da interface",
+            "MVVM substitui persistência local por propriedades globais da View"
+        ]
     },
     {
-      "id": "D1A6",
-      "title": "Quais são as vantagens do MVVM?",
-      "answer": "Maior separação de responsabilidades, melhor testabilidade e menor acoplamento entre View e lógica.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A6",
+        "title": "Qual ganho prático o MVVM traz ao testar uma tela de busca?",
+        "answer": "A lógica de apresentação pode ser testada na ViewModel sem instanciar a interface, usando repositórios ou serviços substituíveis.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "MVVM garante que nenhuma chamada assíncrona terá erro",
+            "MVVM torna Views persistentes automaticamente entre lançamentos",
+            "MVVM elimina a necessidade de modelos porque a ViewModel contém o JSON"
+        ]
     },
     {
-      "id": "D1A7",
-      "title": "O que é uma camada Domain?",
-      "answer": "É a camada responsável pelas regras de negócio da aplicação.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A7",
+        "title": "O que deveria ficar na camada Domain de um app de preparação para entrevistas?",
+        "answer": "Regras e modelos independentes de detalhes de UI ou infraestrutura, como casos de uso, contratos e lógica de pontuação.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Diferencia regras de negócio de detalhes de framework",
+            "Cita casos de uso, contratos ou modelos de domínio",
+            "Explica por que a camada pode ser testada isoladamente"
+        ],
+        "followUpQuestions": [
+            "O Domain deve importar SwiftUI?",
+            "Onde colocaria uma regra específica de JSON?"
+        ]
     },
     {
-      "id": "D1A8",
-      "title": "O que é uma camada Data?",
-      "answer": "É a camada responsável pela obtenção, persistência e gerenciamento dos dados.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A8",
+        "title": "Qual responsabilidade pertence à camada Data quando as perguntas vêm de questions.json?",
+        "answer": "Data implementa acesso e conversão de fontes externas, como carregar o JSON do Bundle e decodificar seus objetos.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Data decide como cada botão será alinhado na View",
+            "Data contém exclusivamente textos de localização e nenhuma leitura de dados",
+            "Data deve conhecer todos os detalhes de navegação entre telas"
+        ]
     },
     {
-      "id": "D1A9",
-      "title": "O que é Dependency Injection?",
-      "answer": "É uma técnica para fornecer dependências externamente a um objeto, reduzindo acoplamento.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A9",
+        "title": "Como injetar um QuestionRepository em uma ViewModel em vez de instanciá-lo internamente?",
+        "answer": "Receber uma dependência que conforma ao protocolo no inicializador da ViewModel, permitindo usar a implementação real ou um mock.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "practicalScenario",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Criar o repository como singleton e acessá-lo por uma variável global",
+            "Usar reflection para procurar qualquer classe com nome Repository",
+            "Passar o caminho do arquivo JSON diretamente para cada método da ViewModel"
+        ]
     },
     {
-      "id": "D1A10",
-      "title": "Por que Dependency Injection é importante?",
-      "answer": "Porque facilita testes, manutenção e reutilização de código.",
-      "category": "Architecture",
-      "difficulty": "Junior"
+        "id": "D1A10",
+        "title": "Por que Dependency Injection é particularmente importante para testar uma busca offline?",
+        "answer": "Ela permite substituir o acesso real ao Bundle por um repositório controlado no teste, isolando a ViewModel e tornando cenários previsíveis.",
+        "category": "Architecture",
+        "difficulty": "Junior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Relaciona injeção à substituição de dependências",
+            "Cita mocks, stubs ou fakes controlados",
+            "Explica isolamento da ViewModel e previsibilidade"
+        ],
+        "followUpQuestions": [
+            "Como injetaria um serviço de IA sem expor API key?",
+            "Qual é a diferença entre initializer injection e service locator?"
+        ]
     },
     {
-      "id": "D1A11",
-      "title": "O que é Clean Architecture?",
-      "answer": "É uma arquitetura baseada na separação de responsabilidades e independência entre camadas.",
-      "category": "Architecture",
-      "difficulty": "Mid"
+        "id": "D1A11",
+        "title": "Em uma feature com regras de domínio, o que caracteriza uma aplicação pragmática de Clean Architecture?",
+        "answer": "Separar casos de uso e contratos de detalhes como UI e persistência, mantendo dependências apontadas para abstrações e sem criar camadas apenas por cerimônia.",
+        "category": "Architecture",
+        "difficulty": "Mid",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica separação entre regras e detalhes",
+            "Menciona dependência de abstrações ou inversão de dependência",
+            "Reconhece o trade-off de complexidade e pragmatismo"
+        ],
+        "followUpQuestions": [
+            "Qual parte da feature não precisa de uma camada própria?",
+            "Como evitar overengineering em um MVP?"
+        ]
     },
     {
-      "id": "D1A12",
-      "title": "O que é um Use Case?",
-      "answer": "Use Case representa uma ação específica da regra de negócio da aplicação.",
-      "category": "Architecture",
-      "difficulty": "Mid"
+        "id": "D1A12",
+        "title": "Uma regra precisa iniciar simulado, sortear perguntas e calcular resultado. O que é um Use Case nesse contexto?",
+        "answer": "Use Case representa uma ação de negócio específica e coordena as dependências necessárias para produzir um resultado, sem depender da View.",
+        "category": "Architecture",
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Use Case é um componente visual que desenha o botão de iniciar",
+            "Use Case é o arquivo JSON que contém todas as perguntas",
+            "Use Case é sempre uma classe global que pode acessar qualquer serviço"
+        ]
     },
     {
-      "id": "D1A13",
-      "title": "O que é um Repository?",
-      "answer": "Repository abstrai o acesso aos dados, permitindo trocar fontes de dados sem afetar outras camadas.",
-      "category": "Architecture",
-      "difficulty": "Mid"
+        "id": "D1A13",
+        "title": "Qual contrato descreve melhor um Repository de perguntas?",
+        "answer": "Repository abstrai a origem dos dados e expõe operações de leitura ou persistência para o domínio, ocultando se a fonte é JSON, banco ou rede.",
+        "category": "Architecture",
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Repository é responsável por formatar fontes, cores e espaçamentos da View",
+            "Repository deve sempre fazer chamadas HTTP, mesmo quando os dados são locais",
+            "Repository é um singleton que impede qualquer implementação alternativa"
+        ]
     },
     {
-      "id": "D1A14",
-      "title": "Qual a diferença entre Service e Repository?",
-      "answer": "Service normalmente faz comunicação externa. Repository abstrai a origem dos dados para o restante da aplicação.",
-      "category": "Architecture",
-      "difficulty": "Mid"
+        "id": "D1A14",
+        "title": "Diferencie Service e Repository ao desenhar uma integração futura com IA.",
+        "answer": "Repository representa acesso a uma coleção ou fonte de dados do domínio; Service encapsula uma capacidade ou operação, como avaliar uma resposta ou gerar explicação.",
+        "category": "Architecture",
+        "difficulty": "Mid",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Diferencia acesso a dados de capacidade operacional",
+            "Aplica a distinção ao serviço de IA",
+            "Explica que os dois devem expor contratos testáveis"
+        ],
+        "followUpQuestions": [
+            "Onde colocaria cache de respostas de IA?",
+            "Uma API de IA pode ser tratada como Repository em algum contexto?"
+        ]
     },
     {
-      "id": "D1A15",
-      "title": "O que significa baixo acoplamento?",
-      "answer": "Significa que componentes dependem minimamente uns dos outros.",
-      "category": "Architecture",
-      "difficulty": "Mid"
+        "id": "D1A15",
+        "title": "Como reconhecer baixo acoplamento em uma ViewModel de perguntas?",
+        "answer": "A ViewModel depende de protocolos e modelos estáveis, não conhece detalhes de JSON, SwiftUI ou rede, e pode ser substituída ou testada isoladamente.",
+        "category": "Architecture",
+        "difficulty": "Mid",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Define baixo acoplamento como poucas dependências concretas",
+            "Relaciona a protocolos e inversão de dependência",
+            "Cita testabilidade ou facilidade de substituição"
+        ],
+        "followUpQuestions": [
+            "Qual dependência concreta você extrairia primeiro?",
+            "Baixo acoplamento significa não haver nenhuma dependência?"
+        ]
     },
     {
-      "id": "D1A16",
-      "title": "O que significa alta coesão?",
-      "answer": "Significa que uma classe ou módulo possui responsabilidades bem definidas e relacionadas.",
-      "category": "Architecture",
-      "difficulty": "Mid"
+        "id": "D1A16",
+        "title": "Uma classe tem uma única responsabilidade bem delimitada, mas depende de outra classe enorme. O que alta coesão descreve?",
+        "answer": "Alta coesão significa que os elementos de um módulo colaboram fortemente para uma responsabilidade relacionada e clara.",
+        "category": "Architecture",
+        "difficulty": "Mid",
+        "questionType": "conceptual",
+        "responseType": "multipleChoice",
+        "distractors": [
+            "Alta coesão significa que todos os módulos devem compartilhar o mesmo estado",
+            "Alta coesão é sinônimo de muitas subclasses e herança profunda",
+            "Alta coesão mede somente a quantidade de linhas de um arquivo"
+        ]
     },
     {
-      "id": "D1A17",
-      "title": "O que é SOLID?",
-      "answer": "SOLID é um conjunto de cinco princípios de design orientado a objetos para produzir código mais flexível e sustentável.",
-      "category": "Architecture",
-      "difficulty": "Senior"
+        "id": "D1A17",
+        "title": "Como você aplicaria SOLID sem transformar uma feature simples em dezenas de abstrações?",
+        "answer": "Aplicar princípios conforme problemas reais de mudança, teste e responsabilidade surgem, mantendo cada módulo coeso e dependente de abstrações úteis.",
+        "category": "Architecture",
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Relaciona SOLID a responsabilidades, extensão e dependências",
+            "Reconhece que princípios são ferramentas e não regras mecânicas",
+            "Considera complexidade e necessidade real da feature"
+        ],
+        "followUpQuestions": [
+            "Qual princípio costuma ser violado em ViewControllers grandes?",
+            "Dê um exemplo de abstração que você não criaria no MVP."
+        ]
     },
     {
-      "id": "D1A18",
-      "title": "Explique o princípio da Inversão de Dependência.",
-      "answer": "Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.",
-      "category": "Architecture",
-      "difficulty": "Senior"
+        "id": "D1A18",
+        "title": "Uma ViewModel importa uma implementação concreta de API, mas o domínio deve continuar independente dela. Explique Inversão de Dependência.",
+        "answer": "Módulos de alto nível devem depender de abstrações definidas pelo domínio; detalhes, como a API concreta, implementam essas abstrações e são injetados.",
+        "category": "Architecture",
+        "difficulty": "Senior",
+        "questionType": "codeAnalysis",
+        "responseType": "freeText",
+        "codeExample": "protocol AIService {\n    func evaluate(_ answer: String) async throws -> AnswerEvaluation\n}\nfinal class InterviewViewModel {\n    private let ai: AIService\n}",
+        "evaluationCriteria": [
+            "Explica dependência do domínio em protocolo",
+            "Identifica a implementação concreta como detalhe substituível",
+            "Relaciona a inversão a testes e evolução"
+        ],
+        "followUpQuestions": [
+            "Quem deve definir o protocolo: a implementação ou o consumidor?",
+            "Como faria fallback offline sem alterar a ViewModel?"
+        ]
     },
     {
-      "id": "D1A19",
-      "title": "Quando utilizar Coordinator Pattern?",
-      "answer": "Quando se deseja remover a responsabilidade de navegação das Views ou ViewControllers.",
-      "category": "Architecture",
-      "difficulty": "Senior"
+        "id": "D1A19",
+        "title": "O fluxo de autenticação tem várias rotas e telas e cada ViewController apresenta a próxima. Quando considerar Coordinator?",
+        "answer": "Coordinator centraliza decisões de navegação e montagem de fluxos, reduzindo que ViewControllers conheçam detalhes das próximas telas.",
+        "category": "Architecture",
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Identifica navegação como responsabilidade extraída",
+            "Explica montagem e transições no Coordinator",
+            "Considera custo de ciclo de vida e comunicação"
+        ],
+        "followUpQuestions": [
+            "Como um Coordinator comunica resultado para o fluxo pai?",
+            "Quando Coordinator seria complexidade desnecessária?"
+        ]
     },
     {
-      "id": "D1A20",
-      "title": "Quais arquiteturas são mais comuns em aplicações iOS modernas?",
-      "answer": "MVVM, Clean Architecture, VIPER e arquiteturas baseadas em Coordinator Pattern.",
-      "category": "Architecture",
-      "difficulty": "Senior"
+        "id": "D1A20",
+        "title": "Compare MVVM, Coordinator e Clean Architecture em um aplicativo iOS moderno.",
+        "answer": "MVVM organiza estado e apresentação, Coordinator separa navegação e Clean Architecture define limites de domínio e infraestrutura; podem ser combinados conforme o tamanho do produto.",
+        "category": "Architecture",
+        "difficulty": "Senior",
+        "questionType": "architectureDecision",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Diferencia apresentação, navegação e domínio",
+            "Explica que os padrões podem ser combinados",
+            "Relaciona escolha ao tamanho, risco e necessidades do produto"
+        ],
+        "followUpQuestions": [
+            "Qual combinação usaria neste MVP e por quê?",
+            "Que sinal indicaria a necessidade de extrair uma nova camada?"
+        ]
     },
     {
-      "id": "E1A1",
-      "title": "Fale sobre você.",
-      "answer": "Estruture sua resposta apresentando sua experiência, tecnologias utilizadas, principais projetos e objetivos profissionais.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A1",
+        "title": "Apresente sua trajetória e destaque uma experiência que mostre como você trabalha como desenvolvedor iOS.",
+        "answer": "Uma boa resposta é objetiva e contextualizada: trajetória, projeto ou impacto relevante, responsabilidades técnicas e o que você busca no próximo desafio.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Apresenta trajetória com começo, contexto e foco em iOS",
+            "Cita responsabilidades ou resultados concretos",
+            "Conecta a experiência ao cargo sem recitar o currículo inteiro"
+        ],
+        "followUpQuestions": [
+            "Qual decisão técnica desse projeto foi mais difícil?",
+            "O que você faria diferente hoje?"
+        ]
     },
     {
-      "id": "E1A2",
-      "title": "Por que você escolheu desenvolvimento iOS?",
-      "answer": "Demonstre interesse pela plataforma Apple, experiência com Swift e motivação para construir produtos de qualidade.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A2",
+        "title": "Por que você escolheu desenvolvimento iOS e o que mantém seu interesse na plataforma?",
+        "answer": "Responder com uma motivação autêntica, uma experiência concreta e aspectos técnicos ou de produto que continuam despertando interesse.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica motivação pessoal ou profissional específica",
+            "Relaciona a escolha a uma experiência prática",
+            "Demonstra interesse atual pela plataforma"
+        ],
+        "followUpQuestions": [
+            "Qual tecnologia iOS você estudaria a seguir?",
+            "Como você valida se uma tecnologia é adequada para uma feature?"
+        ]
     },
     {
-      "id": "E1A3",
-      "title": "Como você lida com feedbacks?",
-      "answer": "Mostre que vê feedbacks como oportunidades de aprendizado e crescimento profissional.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A3",
+        "title": "Conte sobre um feedback difícil que recebeu e como transformou isso em mudança de comportamento.",
+        "answer": "Usar contexto, feedback recebido, ação concreta e resultado; mostrar abertura sem deixar de explicar como avaliou a sugestão.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Descreve um feedback real sem culpar outras pessoas",
+            "Explica a ação tomada após o feedback",
+            "Apresenta aprendizado ou resultado observável"
+        ],
+        "followUpQuestions": [
+            "Como você reage quando discorda do feedback?",
+            "Que feedback gostaria de receber hoje?"
+        ]
     },
     {
-      "id": "E1A4",
-      "title": "Como você aprende uma nova tecnologia?",
-      "answer": "Explique seu processo de estudo, prática e aplicação em projetos reais.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A4",
+        "title": "Você precisa aprender uma API iOS nova para uma feature com prazo curto. Como organiza o aprendizado?",
+        "answer": "Definir o objetivo, consultar documentação oficial, criar um pequeno experimento, validar riscos e aplicar em uma fatia pequena antes de expandir.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Descreve um processo concreto de aprendizado",
+            "Menciona documentação, experimentação ou validação",
+            "Equilibra profundidade técnica com prazo"
+        ],
+        "followUpQuestions": [
+            "Como compartilha o que aprendeu com a equipe?",
+            "Como decide que já sabe o suficiente para implementar?"
+        ]
     },
     {
-      "id": "E1A5",
-      "title": "Conte sobre um desafio técnico que enfrentou.",
-      "answer": "Utilize o método STAR: Situação, Tarefa, Ação e Resultado.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A5",
+        "title": "Conte sobre um desafio técnico de iOS em que você precisou investigar antes de propor uma solução.",
+        "answer": "Explicar contexto, hipótese, investigação, alternativas consideradas, solução aplicada e resultado medido.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Descreve o problema e o impacto",
+            "Mostra investigação baseada em evidências",
+            "Relata solução e resultado, incluindo métricas quando possível"
+        ],
+        "followUpQuestions": [
+            "Que hipótese estava errada?",
+            "Como evitaria que o problema voltasse?"
+        ]
     },
     {
-      "id": "E1A6",
-      "title": "Como você organiza suas tarefas?",
-      "answer": "Explique como prioriza demandas, acompanha progresso e gerencia prazos.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A6",
+        "title": "Como você organiza tarefas quando tem uma feature, correções e revisão de código acontecendo ao mesmo tempo?",
+        "answer": "Priorizar por impacto e prazo, quebrar trabalho em partes pequenas, comunicar bloqueios e reservar tempo para validar a qualidade.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Explica critérios de priorização",
+            "Menciona comunicação de riscos ou bloqueios",
+            "Inclui validação, revisão ou qualidade no planejamento"
+        ],
+        "followUpQuestions": [
+            "Como reage quando todas as tarefas parecem urgentes?",
+            "Como comunica que uma estimativa mudou?"
+        ]
     },
     {
-      "id": "E1A7",
-      "title": "Como você reage a mudanças de prioridade?",
-      "answer": "Demonstre flexibilidade e capacidade de adaptação sem perder produtividade.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A7",
+        "title": "O produto muda a prioridade da sprint enquanto você está implementando uma tela. Como você reage?",
+        "answer": "Entender o novo objetivo, avaliar o trabalho já feito, alinhar o que será preservado ou descartado e comunicar impacto de prazo e risco.",
+        "category": "Behavioral",
+        "responseType": "freeText",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "evaluationCriteria": [
+            "Demonstra adaptação sem perder organização",
+            "Avalia impacto técnico e de prazo",
+            "Comunica claramente decisões e trabalho interrompido"
+        ],
+        "followUpQuestions": [
+            "Quando você argumentaria contra a mudança?",
+            "Como deixaria o código interrompido em um estado seguro?"
+        ]
     },
     {
-      "id": "E1A8",
-      "title": "Você prefere trabalhar sozinho ou em equipe?",
-      "answer": "Mostre que consegue atuar nos dois cenários, valorizando colaboração quando necessário.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A8",
+        "title": "Você prefere trabalhar sozinho ou em equipe? Dê um exemplo que sustente sua resposta.",
+        "answer": "Valorizar colaboração e autonomia: explicar quando trabalhou de forma independente, quando buscou ajuda e como manteve o time alinhado.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Evita resposta binária sem contexto",
+            "Apresenta exemplo de colaboração e autonomia",
+            "Explica como comunica progresso ou pede ajuda"
+        ],
+        "followUpQuestions": [
+            "Como você trabalha com alguém de estilo muito diferente?",
+            "O que faz quando a colaboração não está funcionando?"
+        ]
     },
     {
-      "id": "E1A9",
-      "title": "Como você lida com pressão?",
-      "answer": "Explique como mantém organização, foco e comunicação clara durante períodos desafiadores.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A9",
+        "title": "Conte sobre uma situação de pressão em produção ou perto de uma entrega. Como preservou a qualidade?",
+        "answer": "Manter comunicação objetiva, separar urgência de risco, priorizar mitigação segura, testar o essencial e registrar próximos passos.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Descreve pressão e impacto sem dramatização",
+            "Mostra priorização e comunicação",
+            "Explica como evitou uma correção insegura"
+        ],
+        "followUpQuestions": [
+            "Que trade-off você aceitou?",
+            "Como faria o post-mortem?"
+        ]
     },
     {
-      "id": "E1A10",
-      "title": "Qual foi seu maior aprendizado profissional?",
-      "answer": "Apresente uma experiência concreta e o impacto dela na sua evolução.",
-      "category": "Behavioral",
-      "difficulty": "Junior"
+        "id": "E1A10",
+        "title": "Qual foi seu maior aprendizado profissional até agora e como ele aparece no seu trabalho atual?",
+        "answer": "Escolher um aprendizado específico, explicar a situação que o gerou e mostrar a mudança concreta no modo de desenvolver ou colaborar.",
+        "category": "Behavioral",
+        "difficulty": "Junior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Apresenta aprendizado específico e não apenas uma qualidade",
+            "Explica a experiência que levou ao aprendizado",
+            "Mostra aplicação atual com exemplo"
+        ],
+        "followUpQuestions": [
+            "Como você mede se realmente mudou?",
+            "Qual aprendizado técnico quer consolidar agora?"
+        ]
     },
     {
-      "id": "E1A11",
-      "title": "Como você resolve conflitos em equipe?",
-      "answer": "Priorize comunicação respeitosa, entendimento das perspectivas e foco na solução.",
-      "category": "Behavioral",
-      "difficulty": "Mid"
+        "id": "E1A11",
+        "title": "Dois desenvolvedores discordam sobre usar UIKit ou SwiftUI em uma feature. Como você facilitaria a decisão?",
+        "answer": "Clarificar requisitos e restrições, comparar critérios como compatibilidade, prazo, manutenção e experiência da equipe, fazer um experimento se necessário e decidir com dados.",
+        "category": "Behavioral",
+        "difficulty": "Mid",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Propõe critérios objetivos para a discussão",
+            "Demonstra escuta e respeito às posições",
+            "Conduz para experimento, decisão e registro"
+        ],
+        "followUpQuestions": [
+            "Como agiria se a decisão final fosse contra sua preferência?",
+            "Quando uma discussão técnica precisa de um decisor?"
+        ]
     },
     {
-      "id": "E1A12",
-      "title": "Como você lida com críticas ao seu código?",
-      "answer": "Mostre maturidade para receber sugestões e utilizar code reviews como ferramenta de crescimento.",
-      "category": "Behavioral",
-      "difficulty": "Mid"
+        "id": "E1A12",
+        "title": "Como você reage quando alguém aponta problemas no seu código durante uma revisão?",
+        "answer": "Receber o comentário sobre o código, pedir contexto quando necessário, avaliar a sugestão com base em critérios técnicos e responder ou ajustar de forma transparente.",
+        "category": "Behavioral",
+        "difficulty": "Mid",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Separa crítica ao código de crítica pessoal",
+            "Mostra abertura para entender e ajustar",
+            "Explica como discorda de forma técnica e respeitosa"
+        ],
+        "followUpQuestions": [
+            "Como lidaria com comentários contraditórios?",
+            "O que torna uma revisão de código saudável?"
+        ]
     },
     {
-      "id": "E1A13",
-      "title": "Conte sobre uma situação em que você cometeu um erro.",
-      "answer": "Explique o erro, como identificou a causa e quais medidas tomou para evitar recorrência.",
-      "category": "Behavioral",
-      "difficulty": "Mid"
+        "id": "E1A13",
+        "title": "Conte sobre um erro seu que afetou uma feature iOS. O que fez depois?",
+        "answer": "Assumir o erro, explicar detecção e impacto, corrigir com segurança, comunicar os envolvidos e criar uma prevenção proporcional.",
+        "category": "Behavioral",
+        "difficulty": "Mid",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Assume responsabilidade sem esconder o impacto",
+            "Descreve correção, comunicação e recuperação",
+            "Apresenta uma prevenção ou aprendizado concreto"
+        ],
+        "followUpQuestions": [
+            "Como decidiu entre hotfix e rollback?",
+            "Que teste ou alerta teria ajudado?"
+        ]
     },
     {
-      "id": "E1A14",
-      "title": "Como você compartilha conhecimento com outros desenvolvedores?",
-      "answer": "Mencione mentorias, documentações, apresentações técnicas ou pair programming.",
-      "category": "Behavioral",
-      "difficulty": "Mid"
+        "id": "E1A14",
+        "title": "Como você compartilharia conhecimento sobre concorrência Swift com uma equipe que ainda usa callbacks?",
+        "answer": "Partir de um problema real, apresentar uma explicação incremental, fazer um pequeno exemplo, documentar trade-offs e propor adoção em uma parte segura.",
+        "category": "Behavioral",
+        "difficulty": "Mid",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Adapta a explicação ao nível da equipe",
+            "Usa exemplo prático e comunica trade-offs",
+            "Propõe adoção gradual e espaço para dúvidas"
+        ],
+        "followUpQuestions": [
+            "Como mediria se o conhecimento foi absorvido?",
+            "Quando não recomendaria migrar imediatamente?"
+        ]
     },
     {
-      "id": "E1A15",
-      "title": "O que você faz quando não sabe resolver um problema?",
-      "answer": "Explique como pesquisa, consulta documentação, pede ajuda e testa hipóteses.",
-      "category": "Behavioral",
-      "difficulty": "Mid"
+        "id": "E1A15",
+        "title": "O que você faz quando não sabe resolver um bug de ciclo de vida ou concorrência?",
+        "answer": "Reproduzir o problema, reduzir o caso, consultar documentação e evidências, pedir ajuda com contexto e validar a solução com teste ou instrumentação.",
+        "category": "Behavioral",
+        "difficulty": "Mid",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Apresenta investigação sistemática",
+            "Menciona documentação, logs, debugger ou instrumentos",
+            "Demonstra que pedir ajuda inclui contexto e hipótese"
+        ],
+        "followUpQuestions": [
+            "Como evita ficar horas bloqueado?",
+            "Como registra a solução para o próximo incidente?"
+        ]
     },
     {
-      "id": "E1A16",
-      "title": "Como você equilibra velocidade e qualidade?",
-      "answer": "Mostre que busca entregar valor rapidamente sem comprometer padrões importantes de qualidade.",
-      "category": "Behavioral",
-      "difficulty": "Mid"
+        "id": "E1A16",
+        "title": "Como equilibrar velocidade e qualidade ao entregar um MVP de uma tela de simulados?",
+        "answer": "Definir o menor fluxo útil, explicitar riscos, manter contratos testáveis, cobrir regras críticas e planejar melhorias sem esconder dívida técnica.",
+        "category": "Behavioral",
+        "difficulty": "Mid",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Diferencia escopo de qualidade mínima",
+            "Cita testes ou validações para regras críticas",
+            "Explica como registra e prioriza dívida técnica"
+        ],
+        "followUpQuestions": [
+            "O que você deixaria fora deste MVP?",
+            "Que sinal indicaria que a dívida virou risco?"
+        ]
     },
     {
-      "id": "E1A17",
-      "title": "Como você lidaria com uma decisão técnica da qual discorda?",
-      "answer": "Apresente argumentos técnicos, escute outras opiniões e respeite a decisão final do time.",
-      "category": "Behavioral",
-      "difficulty": "Senior"
+        "id": "E1A17",
+        "title": "Você discorda de uma decisão técnica aprovada pelo time. Como influencia sem travar a entrega?",
+        "answer": "Expor a preocupação com evidências e impacto, propor uma alternativa ou experimento, ouvir o time e apoiar a decisão final com um plano de revisão.",
+        "category": "Behavioral",
+        "difficulty": "Senior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Apresenta discordância de forma objetiva e respeitosa",
+            "Usa evidências, alternativas ou experimento",
+            "Demonstra compromisso após a decisão"
+        ],
+        "followUpQuestions": [
+            "Quando insistiria ou escalaria a decisão?",
+            "Como registraria o risco que permaneceu?"
+        ]
     },
     {
-      "id": "E1A18",
-      "title": "O que caracteriza um bom desenvolvedor sênior?",
-      "answer": "Capacidade técnica, visão sistêmica, mentoria, comunicação e tomada de decisões alinhadas ao negócio.",
-      "category": "Behavioral",
-      "difficulty": "Senior"
+        "id": "E1A18",
+        "title": "Para você, o que caracteriza um desenvolvedor iOS sênior além de conhecer mais APIs?",
+        "answer": "Senioridade envolve tomar decisões com contexto, comunicar trade-offs, elevar a qualidade do time, reduzir riscos e assumir responsabilidade pelo impacto do produto.",
+        "category": "Behavioral",
+        "difficulty": "Senior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Vai além de tempo de experiência ou quantidade de APIs",
+            "Cita decisões, comunicação e impacto no produto",
+            "Inclui contribuição para crescimento e qualidade do time"
+        ],
+        "followUpQuestions": [
+            "Como você mede sua influência?",
+            "Qual comportamento sênior ainda está desenvolvendo?"
+        ]
     },
     {
-      "id": "E1A19",
-      "title": "Como você influencia positivamente uma equipe?",
-      "answer": "Através de colaboração, compartilhamento de conhecimento e exemplo profissional.",
-      "category": "Behavioral",
-      "difficulty": "Senior"
+        "id": "E1A19",
+        "title": "Conte uma situação em que você influenciou positivamente uma equipe sem ser a pessoa gestora.",
+        "answer": "Descrever contexto, iniciativa, como envolveu as pessoas, resistência encontrada e resultado para a equipe ou produto.",
+        "category": "Behavioral",
+        "difficulty": "Senior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Mostra influência por colaboração e não por autoridade",
+            "Explica ações concretas e como lidou com resistência",
+            "Apresenta resultado ou mudança observável"
+        ],
+        "followUpQuestions": [
+            "O que faria se a equipe não aderisse?",
+            "Como evitaria centralizar a decisão em você?"
+        ]
     },
     {
-      "id": "E1A20",
-      "title": "Onde você se vê profissionalmente nos próximos anos?",
-      "answer": "Demonstre ambição alinhada ao crescimento técnico, geração de impacto e evolução de carreira.",
-      "category": "Behavioral",
-      "difficulty": "Senior"
+        "id": "E1A20",
+        "title": "Onde você quer estar profissionalmente nos próximos anos e quais passos está tomando para chegar lá?",
+        "answer": "Conectar uma direção profissional realista a habilidades que estão sendo desenvolvidas, tipos de impacto desejados e próximos passos verificáveis.",
+        "category": "Behavioral",
+        "difficulty": "Senior",
+        "questionType": "behavioral",
+        "responseType": "freeText",
+        "evaluationCriteria": [
+            "Apresenta direção sem depender de um cargo genérico",
+            "Relaciona objetivos a ações atuais de desenvolvimento",
+            "Mostra alinhamento com aprendizado e impacto"
+        ],
+        "followUpQuestions": [
+            "Que tipo de feedback ajudaria nessa evolução?",
+            "Como você revisa esse plano quando prioridades mudam?"
+        ]
     }
 ]

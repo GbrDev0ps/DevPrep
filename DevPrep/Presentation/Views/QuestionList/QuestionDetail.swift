@@ -10,6 +10,7 @@ import SwiftUI
 struct QuestionDetailView: View {
 
     let question: Question
+    @State private var isShowingAssistant = false
 
     var body: some View {
 
@@ -21,6 +22,28 @@ struct QuestionDetailView: View {
                     .font(.title)
 
                 Text(question.answer)
+
+                if let codeExample = question.codeExample {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Exemplo")
+                            .font(.headline)
+                        Text(codeExample)
+                            .font(.system(.body, design: .monospaced))
+                            .textSelection(.enabled)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.black.opacity(0.06))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                }
+
+                Button {
+                    isShowingAssistant = true
+                } label: {
+                    Label("Perguntar à IA", systemImage: "sparkles")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
             }
             .padding()
         }
@@ -29,6 +52,9 @@ struct QuestionDetailView: View {
             ToolbarItem(placement: .automatic) {
                 FavoriteToggleButton(question: question)
             }
+        }
+        .sheet(isPresented: $isShowingAssistant) {
+            QuestionAssistantView(question: question)
         }
     }
 }
