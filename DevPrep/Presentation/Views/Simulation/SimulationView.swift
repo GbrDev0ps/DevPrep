@@ -9,6 +9,8 @@ struct SimulationView: View {
 
     @State
     private var viewModel: SimulationViewModel
+    @State
+    private var startRequestID = 0
 
     init() {
         _viewModel = State(
@@ -21,7 +23,7 @@ struct SimulationView: View {
     var body: some View {
         content
             .navigationTitle(AppStrings.Home.simulations)
-            .task {
+            .task(id: startRequestID) {
                 await viewModel.start()
             }
     }
@@ -41,9 +43,7 @@ private extension SimulationView {
                 Text("Tente novamente em alguns instantes.")
             } actions: {
                 Button("Tentar novamente") {
-                    Task {
-                        await viewModel.start()
-                    }
+                    startRequestID += 1
                 }
             }
         } else if viewModel.isFinished,
@@ -51,9 +51,7 @@ private extension SimulationView {
             SimulationCompletionView(
                 result: result,
                 onRestart: {
-                    Task {
-                        await viewModel.start()
-                    }
+                    startRequestID += 1
                 }
             )
         } else if let question = viewModel.currentQuestion,
@@ -67,21 +65,15 @@ private extension SimulationView {
                 selectedAnswer: viewModel.selectedAnswer,
                 freeTextAnswer: viewModel.freeTextAnswer,
                 answerEvaluation: viewModel.answerEvaluation,
+                evaluationError: viewModel.evaluationError,
                 isAnswerSubmitted: viewModel.isAnswerSubmitted,
                 isEvaluatingAnswer: viewModel.isEvaluatingAnswer,
                 didAnswerCorrectly: viewModel.didAnswerCorrectly,
                 onSelectAnswer: viewModel.selectAnswer,
                 onUpdateFreeTextAnswer: viewModel.updateFreeTextAnswer,
-                onSubmitFreeTextAnswer: {
-                    Task {
-                        await viewModel.submitFreeTextAnswer()
-                    }
-                },
-                onNextQuestion: {
-                    Task {
-                        await viewModel.nextQuestion()
-                    }
-                }
+                onSubmitFreeTextAnswer: viewModel.submitFreeTextAnswer,
+                onSkipQuestion: viewModel.skipCurrentQuestion,
+                onNextQuestion: viewModel.nextQuestion
             )
         }
     }
@@ -97,13 +89,20 @@ private struct SimulationQuestionView: View {
     let selectedAnswer: String?
     let freeTextAnswer: String
     let answerEvaluation: AnswerEvaluation?
+    let evaluationError: String?
     let isAnswerSubmitted: Bool
     let isEvaluatingAnswer: Bool
     let didAnswerCorrectly: Bool
     let onSelectAnswer: (String) -> Void
     let onUpdateFreeTextAnswer: (String) -> Void
-    let onSubmitFreeTextAnswer: () -> Void
-    let onNextQuestion: () -> Void
+    let onSubmitFreeTextAnswer: () async -> Void
+    let onSkipQuestion: () -> Void
+    let onNextQuestion: () async -> Void
+
+    @State
+    private var submitRequestID = 0
+    @State
+    private var nextRequestID = 0
 
     var body: some View {
         ScrollView {
@@ -136,7 +135,9 @@ private struct SimulationQuestionView: View {
                     feedbackSection
                 }
 
-                Button(action: onNextQuestion) {
+                Button {
+                    nextRequestID += 1
+                } label: {
                     Text(questionNumber == questionCount ? "Finalizar simulado" : "Próxima pergunta")
                         .frame(maxWidth: .infinity)
                 }
@@ -144,6 +145,14 @@ private struct SimulationQuestionView: View {
                 .disabled(!isAnswerSubmitted || isEvaluatingAnswer)
             }
             .padding()
+        }
+        .task(id: submitRequestID) {
+            guard submitRequestID > 0 else { return }
+            await onSubmitFreeTextAnswer()
+        }
+        .task(id: nextRequestID) {
+            guard nextRequestID > 0 else { return }
+            await onNextQuestion()
         }
     }
 }
@@ -225,13 +234,17 @@ private extension SimulationQuestionView {
             )
             .frame(minHeight: 150)
             .padding(8)
+            .accessibilityLabel("Resposta da pergunta")
+            .accessibilityHint("Digite sua resposta e envie para receber uma avaliação")
             .overlay {
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(.gray.opacity(0.3))
             }
             .disabled(isAnswerSubmitted || isEvaluatingAnswer)
 
-            Button(action: onSubmitFreeTextAnswer) {
+            Button {
+                submitRequestID += 1
+            } label: {
                 if isEvaluatingAnswer {
                     ProgressView()
                         .frame(maxWidth: .infinity)
@@ -246,6 +259,24 @@ private extension SimulationQuestionView {
                     isAnswerSubmitted ||
                     isEvaluatingAnswer
             )
+
+            if let evaluationError {
+                VStack(alignment: .leading, spacing: 10) {
+                    Label(evaluationError, systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout)
+                        .foregroundStyle(.red)
+
+                    HStack {
+                        Button("Tentar novamente") {
+                            submitRequestID += 1
+                        }
+                        .buttonStyle(.borderedProminent)
+
+                        Button("Pular pergunta", action: onSkipQuestion)
+                            .buttonStyle(.bordered)
+                    }
+                }
+            }
         }
     }
 
@@ -253,10 +284,22 @@ private extension SimulationQuestionView {
         Group {
             if let answerEvaluation {
                 evaluationFeedback(answerEvaluation)
+            } else if question.responseType == .freeText {
+                skippedFeedback
             } else {
                 multipleChoiceFeedback
             }
         }
+    }
+
+    var skippedFeedback: some View {
+        Label(
+            "Pergunta pulada. Revise este tema depois.",
+            systemImage: "arrow.uturn.forward.circle"
+        )
+        .font(.headline)
+        .foregroundStyle(.orange)
+        .feedbackContainer(color: .orange)
     }
 
     var multipleChoiceFeedback: some View {

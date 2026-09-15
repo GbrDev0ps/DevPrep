@@ -16,7 +16,7 @@ final class SimulationViewModel {
     private let optionBuilder: QuestionOptionBuilder
     private let scoringService: SimulationScoringService
     private let aiService: AIService
-    private let historyStore: SimulationHistoryStore
+    private var historyStore: SimulationHistoryStore
 
     private(set) var simulation: Simulation?
     private(set) var currentIndex = 0
@@ -24,6 +24,7 @@ final class SimulationViewModel {
     private(set) var isAnswerSubmitted = false
     private(set) var freeTextAnswer = ""
     private(set) var answerEvaluation: AnswerEvaluation?
+    private(set) var evaluationError: String?
     private(set) var isEvaluatingAnswer = false
     private(set) var isLoading = false
     private(set) var hasLoadError = false
@@ -92,6 +93,7 @@ final class SimulationViewModel {
         isAnswerSubmitted = false
         freeTextAnswer = ""
         answerEvaluation = nil
+        evaluationError = nil
         isEvaluatingAnswer = false
         simulationResult = nil
         answerChoicesByQuestionID = [:]
@@ -118,6 +120,8 @@ final class SimulationViewModel {
                     from: allQuestions
                 )
             }
+        } catch is CancellationError {
+            return
         } catch {
             simulation = nil
             hasLoadError = true
@@ -157,6 +161,7 @@ final class SimulationViewModel {
         }
 
         isEvaluatingAnswer = true
+        evaluationError = nil
         defer {
             isEvaluatingAnswer = false
         }
@@ -171,13 +176,31 @@ final class SimulationViewModel {
             questionResults.append(
                 scoringService.makeQuestionResult(
                     for: currentQuestion,
-                    score: evaluation.score,
-                    isCorrect: evaluation.classification == .correct
+                    score: evaluation.score
                 )
             )
+        } catch is CancellationError {
+            return
         } catch {
             answerEvaluation = nil
+            evaluationError = "Não foi possível avaliar sua resposta."
         }
+    }
+
+    func skipCurrentQuestion() {
+        guard !isAnswerSubmitted,
+              let currentQuestion else {
+            return
+        }
+
+        evaluationError = nil
+        isAnswerSubmitted = true
+        questionResults.append(
+            scoringService.makeQuestionResult(
+                for: currentQuestion,
+                score: 0
+            )
+        )
     }
 
     func nextQuestion() async {
@@ -195,6 +218,7 @@ final class SimulationViewModel {
             isAnswerSubmitted = false
             freeTextAnswer = ""
             answerEvaluation = nil
+            evaluationError = nil
         }
     }
 
@@ -206,7 +230,15 @@ final class SimulationViewModel {
             questionResults: questionResults
         )
 
-        let summary = try? await aiService.summarize(result: baseResult)
+        let summary: String?
+        do {
+            summary = try await aiService.summarize(result: baseResult)
+        } catch is CancellationError {
+            return
+        } catch {
+            summary = nil
+        }
+
         let finalResult = scoringService.makeResult(
             for: simulation,
             questionResults: questionResults,

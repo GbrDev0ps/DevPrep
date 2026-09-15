@@ -4,11 +4,8 @@
 //
 
 import Foundation
-import Observation
 
-@MainActor
-@Observable
-final class SimulationHistoryStore {
+struct SimulationHistoryStore {
 
     private static let storageKey = "simulationHistory"
     private static let maxStoredResults = 20
@@ -31,7 +28,7 @@ final class SimulationHistoryStore {
         self.results = storedResults
     }
 
-    func save(_ result: SimulationResult) {
+    mutating func save(_ result: SimulationResult) {
         results.insert(result, at: 0)
         results = Array(results.prefix(Self.maxStoredResults))
 

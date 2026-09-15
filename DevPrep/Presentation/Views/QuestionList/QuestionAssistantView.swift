@@ -12,6 +12,8 @@ struct QuestionAssistantView: View {
 
     @State
     private var viewModel: QuestionAssistantViewModel
+    @State
+    private var requestID = 0
 
     init(question: Question) {
         _viewModel = State(
@@ -37,15 +39,15 @@ struct QuestionAssistantView: View {
                     )
                     .frame(minHeight: 120)
                     .padding(8)
+                    .accessibilityLabel("Pergunta para a IA")
+                    .accessibilityHint("Digite o que você gostaria de entender sobre esta questão")
                     .overlay {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(.gray.opacity(0.3))
                     }
 
                     Button {
-                        Task {
-                            await viewModel.ask()
-                        }
+                        requestID += 1
                     } label: {
                         if viewModel.isLoading {
                             ProgressView()
@@ -80,6 +82,10 @@ struct QuestionAssistantView: View {
                     }
                 }
                 .padding()
+            }
+            .task(id: requestID) {
+                guard requestID > 0 else { return }
+                await viewModel.ask()
             }
             .navigationTitle("Perguntar à IA")
             .toolbar {

@@ -27,7 +27,7 @@ struct DefaultAIService: AIService {
             } catch is CancellationError {
                 throw CancellationError()
             } catch {
-                // A falha do modelo local não interrompe o estudo offline.
+                logFallback(error)
             }
         }
         #endif
@@ -50,7 +50,7 @@ struct DefaultAIService: AIService {
             } catch is CancellationError {
                 throw CancellationError()
             } catch {
-                // A falha do modelo local não interrompe o estudo offline.
+                logFallback(error)
             }
         }
         #endif
@@ -70,11 +70,20 @@ struct DefaultAIService: AIService {
             } catch is CancellationError {
                 throw CancellationError()
             } catch {
-                // A falha do modelo local não interrompe o estudo offline.
+                logFallback(error)
             }
         }
         #endif
 
         return try await offlineService.summarize(result: result)
+    }
+}
+
+private extension DefaultAIService {
+
+    func logFallback(_ error: Error) {
+        #if DEBUG
+        print("[DefaultAIService] FoundationModels fallback: \(error)")
+        #endif
     }
 }

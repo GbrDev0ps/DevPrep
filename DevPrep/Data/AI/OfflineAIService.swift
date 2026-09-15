@@ -11,20 +11,21 @@ struct OfflineAIService: AIService {
         answer: String,
         for question: Question
     ) async throws -> AnswerEvaluation {
+        // nil means that the legacy question has no rubric and receives the
+        // default criteria. An explicit [] intentionally opts into reference
+        // answer matching instead.
         let criteria = question.evaluationCriteria ?? defaultCriteria(for: question)
         let normalizedAnswer = normalize(answer)
         let answerTokens = Set(tokens(from: normalizedAnswer))
         let referenceTokens = Set(tokens(from: normalize(question.answer)))
 
         let matchedCriteria = criteria.filter { criterion in
-            let criterionTokens = Set(tokens(from: normalize(criterion)))
-            let referenceOverlap = criterionTokens.intersection(referenceTokens).count
-            let answerOverlap = criterionTokens.intersection(answerTokens).count
-
-            return answerOverlap > 0 || (
-                referenceOverlap > 0 &&
-                !answerTokens.intersection(referenceTokens).isEmpty &&
-                answerOverlap >= max(1, min(2, referenceOverlap / 2))
+            criteriaIsCovered(
+                criterion,
+                answer: normalizedAnswer,
+                referenceAnswer: normalize(question.answer),
+                answerTokens: answerTokens,
+                referenceTokens: referenceTokens
             )
         }
 
@@ -126,17 +127,130 @@ private extension OfflineAIService {
     }
 
     func normalize(_ value: String) -> String {
-        value
+        var normalized = value
             .folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+            .lowercased()
+
+        let phraseAliases = [
+            "data race": "corrida de dados",
+            "race condition": "corrida de dados",
+            "thread safe": "seguro concorrente",
+            "thread safety": "seguranca concorrencia",
+            "retain cycle": "ciclo de retencao",
+            "memory leak": "vazamento memoria",
+            "copy on write": "copia sob escrita",
+            "value type": "tipo valor",
+            "reference type": "tipo referencia",
+            "dependency injection": "injecao dependencia",
+            "low coupling": "baixo acoplamento",
+            "high cohesion": "alta coesao",
+            "optional binding": "desembrulho opcional",
+            "force unwrap": "force unwrap",
+            "async await": "async await",
+            "diffable data source": "fonte dados diferencial",
+            "compositional layout": "layout composicional",
+            "hosting controller": "controlador hospedagem"
+        ]
+
+        for (alias, canonicalValue) in phraseAliases {
+            normalized = normalized.replacingOccurrences(
+                of: alias,
+                with: canonicalValue
+            )
+        }
+
+        return normalized
+            .components(separatedBy: CharacterSet.alphanumerics.inverted)
+            .joined(separator: " ")
             .split(whereSeparator: \.isWhitespace)
             .joined(separator: " ")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            .lowercased()
     }
 
     func tokens(from value: String) -> [String] {
         value
             .components(separatedBy: CharacterSet.alphanumerics.inverted)
             .filter { $0.count >= 3 }
+    }
+
+    func criteriaIsCovered(
+        _ criterion: String,
+        answer: String,
+        referenceAnswer: String,
+        answerTokens: Set<String>,
+        referenceTokens: Set<String>
+    ) -> Bool {
+        let criterionGroups = matchedKeywordGroups(in: criterion)
+        let answerGroups = matchedKeywordGroups(in: answer)
+
+        if !criterionGroups.isDisjoint(with: answerGroups) {
+            return true
+        }
+
+        let criterionTokens = Set(tokens(from: normalize(criterion)))
+        let meaningfulTokens = criterionTokens.subtracting(commonWords)
+        let answerOverlap = meaningfulTokens.intersection(answerTokens).count
+
+        guard !meaningfulTokens.isEmpty else {
+            return false
+        }
+
+        if answerOverlap > 0 {
+            return true
+        }
+
+        let referenceGroups = matchedKeywordGroups(in: referenceAnswer)
+        let referenceOverlap = meaningfulTokens.intersection(referenceTokens).count
+        return (referenceOverlap > 0 || !criterionGroups.isDisjoint(with: referenceGroups)) &&
+            !answerTokens.intersection(referenceTokens).isEmpty &&
+            answerOverlap >= max(1, min(2, referenceOverlap / 2))
+    }
+
+    func matchedKeywordGroups(in value: String) -> Set<String> {
+        let valueTokens = Set(tokens(from: normalize(value)))
+
+        return Set(
+            technicalKeywordGroups.compactMap { group in
+                let normalizedGroup = group.map(normalize)
+                guard normalizedGroup.contains(where: { phrase in
+                    Set(tokens(from: phrase)).isSubset(of: valueTokens)
+                }) else {
+                    return nil
+                }
+
+                return normalizedGroup[0]
+            }
+        )
+    }
+
+    var technicalKeywordGroups: [[String]] {
+        [
+            ["corrida de dados", "data race", "race condition"],
+            ["actor", "ator", "atores"],
+            ["concorrencia", "concurrency", "concurrent"],
+            ["async await", "async/await"],
+            ["ciclo de retencao", "retain cycle"],
+            ["vazamento memoria", "memory leak"],
+            ["copia sob escrita", "copy on write"],
+            ["tipo valor", "value type"],
+            ["tipo referencia", "reference type"],
+            ["injecao dependencia", "dependency injection"],
+            ["baixo acoplamento", "low coupling"],
+            ["alta coesao", "high cohesion"],
+            ["desembrulho opcional", "optional binding"],
+            ["force unwrap", "desembrulho forcado"],
+            ["layout composicional", "compositional layout"],
+            ["fonte dados diferencial", "diffable data source"],
+            ["controlador hospedagem", "hosting controller"]
+        ]
+    }
+
+    var commonWords: Set<String> {
+        [
+            "que", "uma", "um", "para", "com", "sem", "das", "dos",
+            "de", "do", "da", "ao", "e", "ou", "como", "sobre",
+            "identifica", "explica", "menciona", "propoe", "aborda",
+            "relaciona", "considera", "demonstra", "inclui", "cita"
+        ]
     }
 }

@@ -44,10 +44,13 @@ final class QuestionAssistantViewModel {
         }
 
         do {
+            response = nil
             response = try await aiService.answer(
                 question: question,
                 userPrompt: prompt
             )
+        } catch is CancellationError {
+            return
         } catch {
             hasError = true
         }

@@ -124,6 +124,7 @@ struct SimulationScoringService {
             questionTitle: question.title,
             category: question.category,
             score: normalizedScore,
+            // A nota 7 é o limiar de aprovação e conta como acerto no resultado.
             isCorrect: isCorrect ?? (normalizedScore >= 7)
         )
     }
